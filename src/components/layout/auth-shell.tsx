@@ -24,39 +24,39 @@ export function AuthShell({
 }: AuthShellProps) {
   return (
     <div className="flex min-h-screen bg-background">
-      <div className="hidden w-1/2 flex-col justify-between border-r border-border/60 bg-muted/20 p-8 lg:flex xl:p-12 relative overflow-hidden">
-        <div className="absolute inset-0 -z-0">
-          <div className="absolute top-1/4 left-1/4 size-[300px] rounded-full bg-primary/5 blur-3xl" />
-          <div className="absolute bottom-1/4 right-1/4 size-[200px] rounded-full bg-primary/3 blur-3xl" />
-        </div>
+      {/* Panel kiri - branding (desktop) */}
+      <div className="relative hidden w-1/2 flex-col justify-between overflow-hidden border-r border-border/60 p-10 lg:flex xl:p-14">
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-600 via-primary to-teal-700 dark:from-emerald-800 dark:via-emerald-900 dark:to-teal-950" />
+        <div className="absolute -left-20 top-1/4 size-80 rounded-full bg-white/10 blur-3xl" />
+        <div className="absolute -right-10 bottom-1/4 size-64 rounded-full bg-black/10 blur-3xl" />
 
         <div className="relative z-10">
           <Link
             href="/"
-            className="flex items-center gap-2 font-bold tracking-tight text-foreground transition-opacity hover:opacity-80"
+            className="flex items-center gap-2.5 font-bold tracking-tight text-white transition-opacity hover:opacity-85"
           >
-            <div className="flex size-7 items-center justify-center rounded-md bg-primary text-[10px] font-bold text-primary-foreground shadow-sm shadow-primary/20">
-              CK
+            <div className="flex size-9 items-center justify-center rounded-xl bg-white/15 shadow-soft backdrop-blur-sm">
+              <img src="/favicon.svg" alt="Catatan Keuangan" className="size-5" />
             </div>
-            <span className="text-sm">Catatan Keuangan</span>
+            <span className="text-base font-extrabold">Catatan Keuangan</span>
           </Link>
         </div>
 
-        <div className="relative z-10 max-w-sm">
-          <div className="mb-1 flex items-center gap-1.5">
-            <div className="h-px w-4 bg-primary/60" />
-            <p className="text-[11px] font-semibold text-primary uppercase tracking-[0.12em]">
+        <div className="relative z-10 max-w-md">
+          <div className="mb-2 flex items-center gap-2">
+            <div className="h-px w-6 bg-white/60" />
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/80">
               {eyebrow}
             </p>
           </div>
-          <h1 className="text-xl font-extrabold tracking-tight text-foreground sm:text-2xl">
+          <h1 className="text-2xl font-extrabold tracking-tight text-white xl:text-3xl">
             {title}
           </h1>
-          <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+          <p className="mt-3 text-sm leading-relaxed text-white/75">
             {description}
           </p>
 
-          <div className="mt-8 space-y-4">
+          <div className="mt-10 space-y-5">
             {[
               {
                 icon: Wallet,
@@ -76,15 +76,15 @@ export function AuthShell({
             ].map((item) => {
               const Icon = item.icon;
               return (
-                <div key={item.title} className="flex gap-3">
-                  <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-border/60 bg-background shadow-sm">
-                    <Icon className="size-4 text-primary" />
+                <div key={item.title} className="flex gap-3.5">
+                  <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white/15 shadow-soft backdrop-blur-sm">
+                    <Icon className="size-5 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-semibold text-foreground">
+                    <h3 className="text-sm font-bold text-white">
                       {item.title}
                     </h3>
-                    <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
+                    <p className="mt-0.5 text-xs leading-relaxed text-white/70">
                       {item.description}
                     </p>
                   </div>
@@ -94,33 +94,34 @@ export function AuthShell({
           </div>
         </div>
 
-        <div className="relative z-10 flex items-center gap-4">
-          <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-            <Shield className="size-3" />
+        <div className="relative z-10 flex items-center gap-5">
+          <div className="flex items-center gap-1.5 text-[11px] font-medium text-white/70">
+            <Shield className="size-3.5" />
             <span>Supabase Auth</span>
           </div>
-          <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-            <Zap className="size-3" />
-            <span>Next.js 16</span>
+          <div className="flex items-center gap-1.5 text-[11px] font-medium text-white/70">
+            <Zap className="size-3.5" />
+            <span>Next.js</span>
           </div>
-          <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-            <TrendingUp className="size-3" />
+          <div className="flex items-center gap-1.5 text-[11px] font-medium text-white/70">
+            <TrendingUp className="size-3.5" />
             <span>Real-time</span>
           </div>
         </div>
       </div>
 
-      <div className="flex w-full items-center justify-center p-5 lg:w-1/2 lg:p-10">
+      {/* Panel kanan - form */}
+      <div className="flex w-full items-center justify-center p-5 sm:p-8 lg:w-1/2">
         <div className="w-full max-w-sm">
           <div className="mb-8 lg:hidden">
             <Link
               href="/"
-              className="flex items-center justify-center gap-2 font-bold tracking-tight text-foreground"
+              className="flex items-center justify-center gap-2.5 font-bold tracking-tight text-foreground"
             >
-              <div className="flex size-7 items-center justify-center rounded-md bg-primary text-[10px] font-bold text-primary-foreground shadow-sm shadow-primary/20">
-                CK
+              <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-emerald-600 shadow-soft">
+                <img src="/favicon.svg" alt="Catatan Keuangan" className="size-5" />
               </div>
-              <span className="text-sm">Catatan Keuangan</span>
+              <span className="text-base font-extrabold">Catatan Keuangan</span>
             </Link>
           </div>
           {children}

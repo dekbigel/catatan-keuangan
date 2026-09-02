@@ -9,17 +9,14 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+
+import { useChartTheme } from "@/components/charts/use-chart-theme";
 import { formatCompactCurrencyIDR, formatCurrencyIDR } from "@/lib/utils/format";
 
 type TrendPoint = {
   label: string;
   net: number;
 };
-
-function formatCurrency(value: unknown) {
-  const normalized = Array.isArray(value) ? value[0] : value;
-  return formatCurrencyIDR(Number(normalized ?? 0));
-}
 
 const CustomTooltip = ({ active, payload, label }: {
   active?: boolean;
@@ -29,12 +26,12 @@ const CustomTooltip = ({ active, payload, label }: {
   if (!active || !payload || !payload.length) return null;
 
   return (
-    <div className="rounded-md border border-border bg-popover px-2.5 py-1.5 shadow-md">
-      <p className="text-[11px] font-medium text-muted-foreground mb-0.5">{label}</p>
-      <div className="flex items-center gap-1.5 text-[11px]">
-        <div className="size-1.5 rounded-full bg-primary" />
+    <div className="rounded-xl border border-border/70 bg-popover px-3 py-2 shadow-lift">
+      <p className="mb-0.5 text-[11px] font-medium text-muted-foreground">{label}</p>
+      <div className="flex items-center gap-1.5 text-xs">
+        <div className="size-2 rounded-full bg-primary" />
         <span className="text-muted-foreground">Arus Kas Net:</span>
-        <span className="font-semibold text-foreground">
+        <span className="font-bold text-foreground">
           {formatCurrencyIDR(payload[0].value)}
         </span>
       </div>
@@ -47,48 +44,50 @@ export function DashboardCashflowTrendChart({
 }: {
   data: TrendPoint[];
 }) {
+  const theme = useChartTheme();
+
   return (
-    <div className="h-[180px] w-full">
+    <div className="h-[220px] w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={data} margin={{ top: 4, right: 4, left: 4, bottom: 4 }}>
+        <AreaChart data={data} margin={{ top: 8, right: 4, left: 4, bottom: 4 }}>
           <defs>
             <linearGradient id="cashflowGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.25} />
-              <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0.02} />
+              <stop offset="5%" stopColor={theme.primary} stopOpacity={0.25} />
+              <stop offset="95%" stopColor={theme.primary} stopOpacity={0.02} />
             </linearGradient>
           </defs>
           <CartesianGrid
             strokeDasharray="3 3"
             vertical={false}
-            stroke="hsl(var(--border))"
-            opacity={0.5}
+            stroke={theme.border}
+            opacity={0.6}
           />
           <XAxis
             dataKey="label"
             tickLine={false}
             axisLine={false}
-            tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
+            tick={{ fontSize: 11, fill: theme.mutedForeground }}
             dy={6}
           />
           <YAxis
             tickFormatter={(value) => formatCompactCurrencyIDR(Number(value ?? 0))}
             tickLine={false}
             axisLine={false}
-            width={70}
-            tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }}
+            width={64}
+            tick={{ fontSize: 10, fill: theme.mutedForeground }}
           />
           <Tooltip content={<CustomTooltip />} />
           <Area
             type="monotone"
             dataKey="net"
-            stroke="hsl(var(--primary))"
+            stroke={theme.primary}
             fill="url(#cashflowGradient)"
-            strokeWidth={2}
+            strokeWidth={2.5}
             dot={false}
             activeDot={{
-              r: 4,
-              fill: "hsl(var(--primary))",
-              stroke: "hsl(var(--background))",
+              r: 5,
+              fill: theme.primary,
+              stroke: "var(--background)",
               strokeWidth: 2,
             }}
           />

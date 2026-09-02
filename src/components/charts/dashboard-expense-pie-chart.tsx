@@ -28,9 +28,25 @@ type PiePoint = {
 
 const RADIAN = Math.PI / 180;
 
+type SliceLabelProps = {
+  cx?: number;
+  cy?: number;
+  midAngle?: number;
+  innerRadius?: number;
+  outerRadius?: number;
+  percent?: number;
+};
+
 /** Label persentase di tengah setiap slice; diabaikan jika < 5% agar tidak berantakan */
-function SliceLabel(props: any) {
-  const { cx, cy, midAngle, innerRadius, outerRadius, percent } = props;
+function SliceLabel(props: SliceLabelProps) {
+  const {
+    cx = 0,
+    cy = 0,
+    midAngle = 0,
+    innerRadius = 0,
+    outerRadius = 0,
+    percent = 0,
+  } = props;
 
   if (percent < 0.05) return null;
 
@@ -67,14 +83,14 @@ const CustomTooltip = ({
 
   const entry = payload[0];
   return (
-    <div className="rounded-md border border-border bg-popover px-2.5 py-1.5 shadow-md">
-      <div className="flex items-center gap-1.5 text-[11px]">
+    <div className="rounded-xl border border-border/70 bg-popover px-3 py-2 shadow-lift">
+      <div className="flex items-center gap-1.5 text-xs">
         <div
-          className="size-1.5 rounded-full"
+          className="size-2 rounded-full"
           style={{ backgroundColor: entry.payload.color }}
         />
         <span className="text-muted-foreground">{entry.name}:</span>
-        <span className="font-semibold text-foreground">
+        <span className="font-bold text-foreground">
           {formatCurrencyIDR(entry.value)}
         </span>
         <span className="text-muted-foreground">
@@ -99,28 +115,67 @@ export function DashboardExpensePieChart({
   }));
 
   return (
-    <div className="h-[220px] w-full">
-      <ResponsiveContainer width="100%" height="100%">
-        <PieChart>
-          <Pie
-            data={chartData}
-            dataKey="value"
-            nameKey="name"
-            innerRadius={60}
-            outerRadius={90}
-            paddingAngle={3}
-            strokeWidth={0}
-            /* Fix: Menggunakan casting 'as any' untuk menghindari ketidakcocokan tipe Recharts */
-            label={SliceLabel as any}
-            labelLine={false}
+    <div className="space-y-4">
+      <div className="relative h-[220px] w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie
+              data={chartData}
+              dataKey="value"
+              nameKey="name"
+              innerRadius={64}
+              outerRadius={92}
+              paddingAngle={3}
+              cornerRadius={6}
+              strokeWidth={0}
+              /* eslint-disable-next-line @typescript-eslint/no-explicit-any --
+                 Recharts label meneruskan props internal yang tidak diekspos tipenya */
+              label={SliceLabel as any}
+              labelLine={false}
+            >
+              {chartData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color} />
+              ))}
+            </Pie>
+            <Tooltip content={<CustomTooltip />} />
+          </PieChart>
+        </ResponsiveContainer>
+        {/* Label total di tengah donut */}
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+            Total
+          </p>
+          <p className="text-sm font-extrabold tracking-tight text-foreground">
+            {formatCurrencyIDR(total)}
+          </p>
+        </div>
+      </div>
+
+      {/* Legend custom */}
+      <ul className="grid grid-cols-1 gap-1.5">
+        {chartData.slice(0, 5).map((entry) => (
+          <li
+            key={entry.name}
+            className="flex items-center gap-2 text-xs"
           >
-            {chartData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.color} />
-            ))}
-          </Pie>
-          <Tooltip content={<CustomTooltip />} />
-        </PieChart>
-      </ResponsiveContainer>
+            <span
+              className="size-2.5 shrink-0 rounded-full"
+              style={{ backgroundColor: entry.color }}
+            />
+            <span className="min-w-0 flex-1 truncate text-muted-foreground">
+              {entry.name}
+            </span>
+            <span className="font-bold text-foreground">
+              {formatCurrencyIDR(entry.value)}
+            </span>
+          </li>
+        ))}
+        {chartData.length > 5 && (
+          <li className="text-[11px] text-muted-foreground">
+            +{chartData.length - 5} kategori lainnya
+          </li>
+        )}
+      </ul>
     </div>
   );
 }

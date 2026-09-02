@@ -88,23 +88,23 @@ export function SavingsProgressDialog({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
         render={
-          <Button variant="ghost" size="sm" className="text-[11px]">
+          <Button variant="ghost" size="sm" className="text-xs">
             <Coins className="size-3.5" />
             Update progress
           </Button>
         }
       />
-      <DialogContent className="max-w-md rounded-xl p-4">
+      <DialogContent className="max-w-md rounded-2xl p-5">
         <DialogHeader className="gap-1.5">
           <DialogTitle className="text-sm">Update progress tabungan</DialogTitle>
-          <DialogDescription className="text-[11px]">
-            Ubah nominal terkumpul untuk target "{goal.name}" secara langsung.
+          <DialogDescription className="text-xs">
+            Ubah nominal terkumpul untuk target &ldquo;{goal.name}&rdquo; secara langsung.
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3" noValidate>
           <Field data-invalid={!!form.formState.errors.currentAmount}>
-            <FieldLabel htmlFor="goal-progress" className="text-[11px]">Nominal terkumpul</FieldLabel>
+            <FieldLabel htmlFor="goal-progress" className="text-xs">Nominal terkumpul</FieldLabel>
             <FieldContent>
               <div className="flex gap-2">
                 <Input
@@ -112,14 +112,14 @@ export function SavingsProgressDialog({
                   type="number"
                   min="0"
                   step="0.01"
-                  className="h-8 rounded-lg text-[11px] flex-1"
+                  className="h-10 rounded-xl text-sm flex-1"
                   {...form.register("currentAmount", { valueAsNumber: true })}
                 />
                 <Button
                   type="button"
                   variant="outline"
                   size="sm"
-                  className="h-8 rounded-lg text-[11px] px-2.5"
+                  className="h-10 rounded-xl text-sm px-2.5"
                   onClick={() => {
                     const current = Number(form.getValues("currentAmount") ?? 0);
                     form.setValue("currentAmount", current * 1000, { shouldValidate: true });
@@ -129,7 +129,7 @@ export function SavingsProgressDialog({
                 </Button>
               </div>
               {form.formState.errors.currentAmount ? (
-                <FieldError errors={[form.formState.errors.currentAmount]} className="text-[11px]" />
+                <FieldError errors={[form.formState.errors.currentAmount]} className="text-xs" />
               ) : null}
             </FieldContent>
           </Field>
@@ -141,12 +141,12 @@ export function SavingsProgressDialog({
               type="button"
               variant="outline"
               size="sm"
-              className="rounded-lg text-[11px] h-7"
+              className="rounded-lg text-xs h-7"
               onClick={() => setOpen(false)}
             >
               Batal
             </Button>
-            <Button type="submit" size="sm" className="rounded-lg text-[11px] h-7" disabled={pending}>
+            <Button type="submit" size="sm" className="rounded-lg text-xs h-7" disabled={pending}>
               {pending ? "Menyimpan..." : "Simpan progress"}
             </Button>
           </div>

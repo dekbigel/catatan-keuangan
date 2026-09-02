@@ -42,7 +42,7 @@ export function BudgetPeriodFilter({
   return (
     <div className="space-y-2 pb-3">
       {/* <div className="flex items-center gap-2">
-        <span className="inline-flex items-center gap-1 rounded-md border border-border bg-muted/50 px-1.5 py-0.5 text-[10px] text-muted-foreground">
+        <span className="inline-flex items-center gap-1 rounded-md border border-border bg-muted/50 px-1.5 py-0.5 text-[11px] text-muted-foreground">
           <Calendar className="size-3" />
           {monthLabel} {year}
         </span>
@@ -54,18 +54,18 @@ export function BudgetPeriodFilter({
       >
         <div className="grid gap-2.5 sm:grid-cols-[1fr_160px_auto]">
           <div>
-            <label className="mb-1 block text-[11px] font-medium text-foreground">
+            <label className="mb-1 block text-xs font-medium text-foreground">
               Bulan
             </label>
             <Select name="month" defaultValue={String(month)}>
-              <SelectTrigger className="h-8 w-full rounded-lg bg-background text-[11px]">
+              <SelectTrigger className="h-8 w-full rounded-lg bg-background text-xs">
                 <SelectValue placeholder="Pilih bulan">
                   {monthLabel}
                 </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {monthOptions.map((item) => (
-                  <SelectItem key={item.value} value={String(item.value)} className="text-[11px]">
+                  <SelectItem key={item.value} value={String(item.value)} className="text-xs">
                     {item.label}
                   </SelectItem>
                 ))}
@@ -74,7 +74,7 @@ export function BudgetPeriodFilter({
           </div>
 
           <div>
-            <label className="mb-1 block text-[11px] font-medium text-foreground">
+            <label className="mb-1 block text-xs font-medium text-foreground">
               Tahun
             </label>
             <Input
@@ -83,12 +83,12 @@ export function BudgetPeriodFilter({
               min="2000"
               max="2100"
               defaultValue={year}
-              className="h-8 rounded-lg bg-background text-[11px]"
+              className="h-8 rounded-lg bg-background text-xs"
             />
           </div>
 
           <div className="flex items-end gap-2">
-            <Button type="submit" size="sm" className="h-7 rounded-lg text-[11px]">
+            <Button type="submit" size="sm" className="h-9 rounded-xl text-xs">
               <Filter className="size-3 mr-1" />
               Terapkan
             </Button>
@@ -97,7 +97,7 @@ export function BudgetPeriodFilter({
               className={buttonVariants({
                 variant: "outline",
                 size: "sm",
-                className: "h-7 rounded-lg text-[11px] gap-1",
+                className: "h-9 rounded-xl text-xs gap-1",
               })}
             >
               <RotateCcw className="size-3" />

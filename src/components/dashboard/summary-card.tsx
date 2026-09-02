@@ -65,47 +65,45 @@ export function SummaryCard({
   return (
     <Card
       className={cn(
-        "group relative overflow-hidden border-border/60 bg-card transition-all duration-200 hover:shadow-sm",
+        "group relative gap-0 overflow-hidden border-border/70 bg-card py-0 shadow-soft transition-all duration-200 hover:shadow-lift",
         styles.gradient
       )}
     >
-      <CardContent className="p-3.5">
-        <div className="flex items-start justify-between gap-2">
+      <CardContent className="p-4 sm:p-5">
+        <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
-            <p className="text-[11px] font-medium text-muted-foreground leading-tight">
+            <p className="text-xs font-semibold leading-tight text-muted-foreground">
               {label}
             </p>
-            <p className="mt-1 text-base font-bold tracking-tight text-foreground">
+            <p className="mt-1.5 truncate text-lg font-extrabold tracking-tight text-foreground sm:text-xl">
               {value}
             </p>
-            <div className="mt-1 flex items-center gap-1">
+            <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
               {trend && TrendIcon && (
-                <TrendIcon
-                  className={cn("size-3", trendConfig[trend].color)}
-                />
-              )}
-              {trendValue && (
                 <span
                   className={cn(
-                    "text-[11px] font-medium",
-                    trendConfig[trend ?? "neutral"].color
+                    "inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-xs font-semibold",
+                    trend === "up" &&
+                      "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
+                    trend === "down" &&
+                      "bg-rose-500/10 text-rose-700 dark:text-rose-400",
+                    trend === "neutral" && "bg-muted text-muted-foreground"
                   )}
                 >
-                  {trendValue}
+                  <TrendIcon className="size-3" />
+                  {trendValue ?? ""}
                 </span>
               )}
-              <span className="text-[11px] text-muted-foreground">
-                {helper}
-              </span>
+              <span className="text-xs text-muted-foreground">{helper}</span>
             </div>
           </div>
           <div
             className={cn(
-              "flex size-8 shrink-0 items-center justify-center rounded-lg transition-transform duration-200 group-hover:scale-105",
+              "flex size-10 shrink-0 items-center justify-center rounded-xl transition-transform duration-200 group-hover:scale-105",
               styles.iconBg
             )}
           >
-            <Icon className={cn("size-4", styles.iconColor)} />
+            <Icon className={cn("size-5", styles.iconColor)} />
           </div>
         </div>
       </CardContent>

@@ -11,6 +11,7 @@ import {
   YAxis,
 } from "recharts";
 
+import { useChartTheme } from "@/components/charts/use-chart-theme";
 import { formatCompactCurrencyIDR, formatCurrencyIDR } from "@/lib/utils/format";
 
 type ChartPoint = {
@@ -18,11 +19,6 @@ type ChartPoint = {
   income: number;
   expense: number;
 };
-
-function formatCurrency(value: unknown) {
-  const normalized = Array.isArray(value) ? value[0] : value;
-  return formatCurrencyIDR(Number(normalized ?? 0));
-}
 
 const CustomTooltip = ({ active, payload, label }: {
   active?: boolean;
@@ -32,16 +28,16 @@ const CustomTooltip = ({ active, payload, label }: {
   if (!active || !payload) return null;
 
   return (
-    <div className="rounded-md border border-border bg-popover px-2.5 py-1.5 shadow-md">
-      <p className="text-[11px] font-medium text-muted-foreground mb-1">{label}</p>
+    <div className="rounded-xl border border-border/70 bg-popover px-3 py-2 shadow-lift">
+      <p className="mb-1 text-[11px] font-medium text-muted-foreground">{label}</p>
       {payload.map((entry, index) => (
-        <div key={index} className="flex items-center gap-1.5 text-[11px]">
+        <div key={index} className="flex items-center gap-1.5 text-xs">
           <div
-            className="size-1.5 rounded-full"
+            className="size-2 rounded-full"
             style={{ backgroundColor: entry.color }}
           />
           <span className="text-muted-foreground">{entry.name}:</span>
-          <span className="font-semibold text-foreground">
+          <span className="font-bold text-foreground">
             {formatCurrencyIDR(entry.value)}
           </span>
         </div>
@@ -55,49 +51,51 @@ export function DashboardMonthlyComparisonChart({
 }: {
   data: ChartPoint[];
 }) {
+  const theme = useChartTheme();
+
   return (
-    <div className="h-[220px] w-full">
+    <div className="h-[240px] w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data} barGap={3} barCategoryGap="20%">
+        <BarChart data={data} barGap={4} barCategoryGap="24%">
           <CartesianGrid
             strokeDasharray="3 3"
             vertical={false}
-            stroke="hsl(var(--border))"
-            opacity={0.5}
+            stroke={theme.border}
+            opacity={0.6}
           />
           <XAxis
             dataKey="label"
             tickLine={false}
             axisLine={false}
-            tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
+            tick={{ fontSize: 11, fill: theme.mutedForeground }}
             dy={6}
           />
           <YAxis
             tickFormatter={(value) => formatCompactCurrencyIDR(Number(value ?? 0))}
             tickLine={false}
             axisLine={false}
-            width={70}
-            tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }}
+            width={64}
+            tick={{ fontSize: 10, fill: theme.mutedForeground }}
           />
-          <Tooltip content={<CustomTooltip />} />
+          <Tooltip content={<CustomTooltip />} cursor={{ fill: theme.border, opacity: 0.25 }} />
           <Legend
             iconType="circle"
-            iconSize={6}
-            wrapperStyle={{ fontSize: 11, paddingTop: 8 }}
+            iconSize={7}
+            wrapperStyle={{ fontSize: 12, paddingTop: 8 }}
           />
           <Bar
             dataKey="income"
             name="Pemasukan"
-            fill="hsl(var(--chart-1))"
-            radius={[4, 4, 0, 0]}
-            maxBarSize={32}
+            fill={theme.income}
+            radius={[6, 6, 0, 0]}
+            maxBarSize={36}
           />
           <Bar
             dataKey="expense"
             name="Pengeluaran"
-            fill="hsl(var(--chart-4))"
-            radius={[4, 4, 0, 0]}
-            maxBarSize={32}
+            fill={theme.expense}
+            radius={[6, 6, 0, 0]}
+            maxBarSize={36}
           />
         </BarChart>
       </ResponsiveContainer>

@@ -141,44 +141,45 @@ export function AccountFormDialog({ account }: AccountFormDialogProps) {
       <DialogTrigger
         render={
           isEdit ? (
-            <Button variant="ghost" size="sm" className="text-[11px]">
+            <Button variant="ghost" size="sm" className="text-xs">
               <SquarePen className="size-3.5" />
               Edit
             </Button>
           ) : (
-            <Button size="sm" className="rounded-full text-[11px] h-7 gap-1">
-              <Plus className="size-3.5" />
-              Tambah akun
+            <Button className="h-12 gap-2 rounded-full px-5 text-sm font-bold shadow-lift">
+              <Plus className="size-5" />
+              <span className="hidden sm:inline">Tambah Akun</span>
+              <span className="sm:hidden">Akun</span>
             </Button>
           )
         }
       />
-      <DialogContent className="max-w-md rounded-xl p-4">
+      <DialogContent className="max-w-md rounded-2xl p-5">
         <DialogHeader className="gap-1.5">
           <DialogTitle className="text-sm">{isEdit ? "Edit akun" : "Tambah akun"}</DialogTitle>
-          <DialogDescription className="text-[11px]">
+          <DialogDescription className="text-xs">
             Isi nama akun, pilih tipe, lalu tentukan saldo awalnya.
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3" noValidate>
           <Field data-invalid={!!form.formState.errors.name}>
-            <FieldLabel htmlFor="account-name" className="text-[11px]">Nama akun</FieldLabel>
+            <FieldLabel htmlFor="account-name" className="text-xs">Nama akun</FieldLabel>
             <FieldContent>
               <Input
                 id="account-name"
                 placeholder="Contoh: BCA Utama"
-                className="h-8 rounded-lg text-[11px] placeholder:text-[11px]"
+                className="h-10 rounded-xl text-sm placeholder:text-xs"
                 {...form.register("name")}
               />
               {form.formState.errors.name ? (
-                <FieldError errors={[form.formState.errors.name]} className="text-[11px]" />
+                <FieldError errors={[form.formState.errors.name]} className="text-xs" />
               ) : null}
             </FieldContent>
           </Field>
 
           <Field data-invalid={!!form.formState.errors.type}>
-            <FieldLabel className="text-[11px]">Tipe akun</FieldLabel>
+            <FieldLabel className="text-xs">Tipe akun</FieldLabel>
             <FieldContent className="space-y-2">
               <Select
                 value={isCustomType ? "custom" : selectedType}
@@ -197,7 +198,7 @@ export function AccountFormDialog({ account }: AccountFormDialogProps) {
                   }
                 }}
               >
-                <SelectTrigger className="h-8 w-full rounded-lg text-[11px]">
+                <SelectTrigger className="h-10 w-full rounded-xl text-sm">
                   <SelectValue placeholder="Pilih tipe akun">
                     {isCustomType
                       ? "Tipe Akun Kostum"
@@ -208,11 +209,11 @@ export function AccountFormDialog({ account }: AccountFormDialogProps) {
                 </SelectTrigger>
                 <SelectContent>
                   {accountTypes.map((type) => (
-                    <SelectItem key={type} value={type} className="text-[11px]">
+                    <SelectItem key={type} value={type} className="text-xs">
                       {typeLabels[type]}
                     </SelectItem>
                   ))}
-                  <SelectItem value="custom" className="text-[11px] font-semibold text-sky-600 dark:text-sky-400">
+                  <SelectItem value="custom" className="text-xs font-semibold text-sky-600 dark:text-sky-400">
                     + Tambah
                   </SelectItem>
                 </SelectContent>
@@ -221,7 +222,7 @@ export function AccountFormDialog({ account }: AccountFormDialogProps) {
               {isCustomType && (
                 <Input
                   placeholder="Masukkan nama"
-                  className="h-8 rounded-lg text-[11px] placeholder:text-[11px]"
+                  className="h-10 rounded-xl text-sm placeholder:text-xs"
                   value={customTypeName}
                   onChange={(e) => {
                     const val = e.target.value;
@@ -237,13 +238,13 @@ export function AccountFormDialog({ account }: AccountFormDialogProps) {
               )}
 
               {form.formState.errors.type ? (
-                <FieldError errors={[form.formState.errors.type]} className="text-[11px]" />
+                <FieldError errors={[form.formState.errors.type]} className="text-xs" />
               ) : null}
             </FieldContent>
           </Field>
 
           <Field data-invalid={!!form.formState.errors.initialBalance}>
-            <FieldLabel htmlFor="initial-balance" className="text-[11px]">Saldo awal</FieldLabel>
+            <FieldLabel htmlFor="initial-balance" className="text-xs">Saldo awal</FieldLabel>
             <FieldContent>
               <div className="flex gap-2">
                 <Input
@@ -251,7 +252,7 @@ export function AccountFormDialog({ account }: AccountFormDialogProps) {
                   type="text"
                   inputMode="numeric"
                   placeholder="Contoh: 1.000.000"
-                  className="h-8 rounded-lg text-[11px] placeholder:text-[11px] flex-1"
+                  className="h-10 rounded-xl text-sm placeholder:text-xs flex-1"
                   value={displayBalance}
                   onChange={handleBalanceChange}
                 />
@@ -259,7 +260,7 @@ export function AccountFormDialog({ account }: AccountFormDialogProps) {
                   type="button"
                   variant="outline"
                   size="sm"
-                  className="h-8 rounded-lg text-[11px] px-2.5 shrink-0"
+                  className="h-10 rounded-xl text-sm px-2.5 shrink-0"
                   onClick={() => {
                     const raw = displayBalance.replace(/\./g, "");
                     const num = raw ? parseInt(raw, 10) * 1000 : 0;
@@ -271,7 +272,7 @@ export function AccountFormDialog({ account }: AccountFormDialogProps) {
                 </Button>
               </div>
               {form.formState.errors.initialBalance ? (
-                <FieldError errors={[form.formState.errors.initialBalance]} className="text-[11px]" />
+                <FieldError errors={[form.formState.errors.initialBalance]} className="text-xs" />
               ) : null}
             </FieldContent>
           </Field>
@@ -283,12 +284,12 @@ export function AccountFormDialog({ account }: AccountFormDialogProps) {
               type="button"
               variant="outline"
               size="sm"
-              className="rounded-lg text-[11px] h-7"
+              className="rounded-lg text-xs h-7"
               onClick={() => setOpen(false)}
             >
               Batal
             </Button>
-            <Button type="submit" size="sm" className="rounded-lg text-[11px] h-7" disabled={pending}>
+            <Button type="submit" size="sm" className="rounded-lg text-xs h-7" disabled={pending}>
               {pending ? "Menyimpan..." : isEdit ? "Simpan perubahan" : "Buat akun"}
             </Button>
           </div>

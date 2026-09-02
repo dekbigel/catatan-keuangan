@@ -22,7 +22,7 @@ export default function DashboardErrorPage({
   }, [error]);
 
   return (
-    <section className="space-y-5">
+    <section className="space-y-6">
       <PageHeader
         eyebrow="Error State"
         title="Halaman belum berhasil dimuat"
@@ -33,7 +33,7 @@ export default function DashboardErrorPage({
         title="Terjadi kendala saat memuat halaman"
         description="Anda bisa mencoba memuat ulang data tanpa meninggalkan halaman saat ini."
         action={
-          <Button type="button" className="rounded-xl" onClick={reset}>
+          <Button type="button" className="h-9 rounded-xl text-xs" onClick={reset}>
             <RotateCcw className="size-4" />
             Coba lagi
           </Button>

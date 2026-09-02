@@ -106,7 +106,7 @@ export function SettingsForm({ onClose }: SettingsFormProps) {
                     <Button
                         type="button"
                         size="sm"
-                        className="h-7 rounded-lg text-[11px]"
+                        className="h-9 rounded-xl text-xs"
                         onClick={handleExport}
                         disabled={exportPending}
                     >
@@ -136,7 +136,7 @@ export function SettingsForm({ onClose }: SettingsFormProps) {
                             type="button"
                             variant="destructive"
                             size="sm"
-                            className="h-7 rounded-lg text-[11px]"
+                            className="h-9 rounded-xl text-xs"
                             onClick={() => {
                                 setResetOpen(true);
                                 setResetMessage(null);
@@ -146,7 +146,7 @@ export function SettingsForm({ onClose }: SettingsFormProps) {
                             Reset Semua Data
                         </Button>
                     ) : (
-                        <div className="space-y-3 rounded-lg border border-destructive/20 bg-destructive/5 p-3">
+                        <div className="space-y-3 rounded-xl border border-destructive/20 bg-destructive/5 p-4">
                             <div className="flex items-start gap-2">
                                 <AlertTriangle className="size-4 text-destructive shrink-0 mt-0.5" />
                                 <p className="text-[11px] text-destructive">
@@ -157,7 +157,7 @@ export function SettingsForm({ onClose }: SettingsFormProps) {
                                 value={confirmText}
                                 onChange={(e) => setConfirmText(e.target.value)}
                                 placeholder="Ketik HAPUS"
-                                className="h-8 rounded-lg text-[11px] bg-background"
+                                className="h-10 rounded-xl text-sm bg-background"
                             />
                             {resetMessage ? (
                                 <FormMessage tone={resetMessage.tone} message={resetMessage.text} />
@@ -167,7 +167,7 @@ export function SettingsForm({ onClose }: SettingsFormProps) {
                                     type="button"
                                     variant="outline"
                                     size="sm"
-                                    className="h-7 rounded-lg text-[11px]"
+                                    className="h-9 rounded-xl text-xs"
                                     onClick={() => {
                                         setResetOpen(false);
                                         setConfirmText("");
@@ -180,7 +180,7 @@ export function SettingsForm({ onClose }: SettingsFormProps) {
                                     type="button"
                                     variant="destructive"
                                     size="sm"
-                                    className="h-7 rounded-lg text-[11px]"
+                                    className="h-9 rounded-xl text-xs"
                                     onClick={handleReset}
                                     disabled={resetPending}
                                 >

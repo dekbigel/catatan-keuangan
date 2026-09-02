@@ -51,17 +51,20 @@ const typeConfig = {
   income: {
     label: "Income",
     icon: Landmark,
-    className: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    className:
+      "bg-emerald-500/10 text-emerald-700 border-emerald-500/40 dark:text-emerald-400",
   },
   expense: {
     label: "Expense",
     icon: CalendarDays,
-    className: "bg-rose-50 text-rose-700 border-rose-200",
+    className:
+      "bg-rose-500/10 text-rose-700 border-rose-500/40 dark:text-rose-400",
   },
   transfer: {
     label: "Transfer",
     icon: Repeat,
-    className: "bg-sky-50 text-sky-700 border-sky-200",
+    className:
+      "bg-sky-500/10 text-sky-700 border-sky-500/40 dark:text-sky-400",
   },
 } as const;
 
@@ -182,24 +185,25 @@ export function TransactionFormDialog({
       <DialogTrigger
         render={
           isEdit ? (
-            <Button variant="ghost" size="sm" className="text-[11px]">
+            <Button variant="ghost" size="sm" className="text-xs">
               <SquarePen className="size-3.5" />
               Edit
             </Button>
           ) : (
-            <Button size="sm" className="rounded-full text-[11px] h-7 gap-1">
-              <Plus className="size-3.5" />
-              Tambah transaksi
+            <Button className="h-12 gap-2 rounded-full px-5 text-sm font-bold shadow-lift hover:shadow-lift">
+              <Plus className="size-5" />
+              <span className="hidden sm:inline">Tambah Transaksi</span>
+              <span className="sm:hidden">Transaksi</span>
             </Button>
           )
         }
       />
-      <DialogContent className="max-h-[90vh] max-w-lg overflow-y-auto rounded-xl p-4">
+      <DialogContent className="max-h-[90vh] max-w-lg overflow-y-auto rounded-2xl p-5">
         <DialogHeader className="gap-1.5">
           <DialogTitle className="text-sm">
             {isEdit ? "Edit transaksi" : "Tambah transaksi"}
           </DialogTitle>
-          <DialogDescription className="text-[11px]">
+          <DialogDescription className="text-xs">
             Form akan berubah sesuai tipe transaksi: income, expense, atau transfer.
           </DialogDescription>
         </DialogHeader>
@@ -233,8 +237,8 @@ export function TransactionFormDialog({
                     }`}
                 >
                   <Icon className="size-4" />
-                  <p className="mt-2 text-[11px] font-semibold">{config.label}</p>
-                  <p className="mt-0.5 text-[10px] opacity-80">
+                  <p className="mt-2 text-xs font-semibold">{config.label}</p>
+                  <p className="mt-0.5 text-[11px] opacity-80">
                     {value === "transfer"
                       ? "Pindahkan saldo antar akun."
                       : value === "income"
@@ -248,14 +252,14 @@ export function TransactionFormDialog({
 
           <div className="grid gap-3 sm:grid-cols-2">
             <Field data-invalid={!!form.formState.errors.amount}>
-              <FieldLabel htmlFor="transaction-amount" className="text-[11px]">Nominal</FieldLabel>
+              <FieldLabel htmlFor="transaction-amount" className="text-xs">Nominal</FieldLabel>
               <FieldContent>
                 <div className="flex gap-2">
                   <Input
                     id="transaction-amount"
                     type="text"
                     inputMode="numeric"
-                    className="h-8 rounded-lg text-[11px] flex-1"
+                    className="h-10 rounded-xl text-sm flex-1"
                     placeholder="0"
                     value={displayAmount}
                     onChange={(e) => {
@@ -274,7 +278,7 @@ export function TransactionFormDialog({
                     type="button"
                     variant="outline"
                     size="sm"
-                    className="h-8 rounded-lg text-[11px] px-2.5"
+                    className="h-10 rounded-xl text-sm px-2.5"
                     onClick={() => {
                       const raw = displayAmount.replace(/\./g, "");
                       const num = raw ? Number(raw) * 1000 : 0;
@@ -289,22 +293,22 @@ export function TransactionFormDialog({
                   </Button>
                 </div>
                 {form.formState.errors.amount ? (
-                  <FieldError errors={[form.formState.errors.amount]} className="text-[11px]" />
+                  <FieldError errors={[form.formState.errors.amount]} className="text-xs" />
                 ) : null}
               </FieldContent>
             </Field>
 
             <Field data-invalid={!!form.formState.errors.transactionDate}>
-              <FieldLabel htmlFor="transaction-date" className="text-[11px]">Tanggal</FieldLabel>
+              <FieldLabel htmlFor="transaction-date" className="text-xs">Tanggal</FieldLabel>
               <FieldContent>
                 <Input
                   id="transaction-date"
                   type="date"
-                  className="h-8 rounded-lg text-[11px]"
+                  className="h-10 rounded-xl text-sm"
                   {...form.register("transactionDate")}
                 />
                 {form.formState.errors.transactionDate ? (
-                  <FieldError errors={[form.formState.errors.transactionDate]} className="text-[11px]" />
+                  <FieldError errors={[form.formState.errors.transactionDate]} className="text-xs" />
                 ) : null}
               </FieldContent>
             </Field>
@@ -313,7 +317,7 @@ export function TransactionFormDialog({
           {selectedType === "transfer" ? (
             <div className="grid gap-3 sm:grid-cols-2">
               <Field data-invalid={!!form.formState.errors.fromAccountId}>
-                <FieldLabel className="text-[11px]">Akun asal</FieldLabel>
+                <FieldLabel className="text-xs">Akun asal</FieldLabel>
                 <FieldContent>
                   <Select
                     value={selectedFromAccountId ?? ""}
@@ -323,27 +327,27 @@ export function TransactionFormDialog({
                       })
                     }
                   >
-                    <SelectTrigger className="h-8 w-full rounded-lg text-[11px]">
+                    <SelectTrigger className="h-10 w-full rounded-xl text-sm">
                       <SelectValue placeholder="Pilih akun asal">
                         {accounts.find((a) => a.id === selectedFromAccountId)?.name}
                       </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
                       {accounts.map((account) => (
-                        <SelectItem key={account.id} value={account.id} className="text-[11px]">
+                        <SelectItem key={account.id} value={account.id} className="text-xs">
                           {account.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                   {form.formState.errors.fromAccountId ? (
-                    <FieldError errors={[form.formState.errors.fromAccountId]} className="text-[11px]" />
+                    <FieldError errors={[form.formState.errors.fromAccountId]} className="text-xs" />
                   ) : null}
                 </FieldContent>
               </Field>
 
               <Field data-invalid={!!form.formState.errors.toAccountId}>
-                <FieldLabel className="text-[11px]">Akun tujuan</FieldLabel>
+                <FieldLabel className="text-xs">Akun tujuan</FieldLabel>
                 <FieldContent>
                   <Select
                     value={selectedToAccountId ?? ""}
@@ -353,21 +357,21 @@ export function TransactionFormDialog({
                       })
                     }
                   >
-                    <SelectTrigger className="h-8 w-full rounded-lg text-[11px]">
+                    <SelectTrigger className="h-10 w-full rounded-xl text-sm">
                       <SelectValue placeholder="Pilih akun tujuan">
                         {accounts.find((a) => a.id === selectedToAccountId)?.name}
                       </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
                       {accounts.map((account) => (
-                        <SelectItem key={account.id} value={account.id} className="text-[11px]">
+                        <SelectItem key={account.id} value={account.id} className="text-xs">
                           {account.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                   {form.formState.errors.toAccountId ? (
-                    <FieldError errors={[form.formState.errors.toAccountId]} className="text-[11px]" />
+                    <FieldError errors={[form.formState.errors.toAccountId]} className="text-xs" />
                   ) : null}
                 </FieldContent>
               </Field>
@@ -375,7 +379,7 @@ export function TransactionFormDialog({
           ) : (
             <div className="grid gap-3 sm:grid-cols-2">
               <Field data-invalid={!!form.formState.errors.accountId}>
-                <FieldLabel className="text-[11px]">Akun</FieldLabel>
+                <FieldLabel className="text-xs">Akun</FieldLabel>
                 <FieldContent>
                   <Select
                     value={selectedAccountId ?? ""}
@@ -385,27 +389,27 @@ export function TransactionFormDialog({
                       })
                     }
                   >
-                    <SelectTrigger className="h-8 w-full rounded-lg text-[11px]">
+                    <SelectTrigger className="h-10 w-full rounded-xl text-sm">
                       <SelectValue placeholder="Pilih akun">
                         {accounts.find((a) => a.id === selectedAccountId)?.name}
                       </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
                       {accounts.map((account) => (
-                        <SelectItem key={account.id} value={account.id} className="text-[11px]">
+                        <SelectItem key={account.id} value={account.id} className="text-xs">
                           {account.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                   {form.formState.errors.accountId ? (
-                    <FieldError errors={[form.formState.errors.accountId]} className="text-[11px]" />
+                    <FieldError errors={[form.formState.errors.accountId]} className="text-xs" />
                   ) : null}
                 </FieldContent>
               </Field>
 
               <Field data-invalid={!!form.formState.errors.categoryId}>
-                <FieldLabel className="text-[11px]">Kategori</FieldLabel>
+                <FieldLabel className="text-xs">Kategori</FieldLabel>
                 <FieldContent>
                   <Select
                     value={selectedCategoryId ?? ""}
@@ -415,7 +419,7 @@ export function TransactionFormDialog({
                       })
                     }
                   >
-                    <SelectTrigger className="h-8 w-full rounded-lg text-[11px]">
+                    <SelectTrigger className="h-10 w-full rounded-xl text-sm">
                       <SelectValue
                         placeholder={
                           selectedType === "income"
@@ -428,14 +432,14 @@ export function TransactionFormDialog({
                     </SelectTrigger>
                     <SelectContent>
                       {activeCategories.map((category) => (
-                        <SelectItem key={category.id} value={category.id} className="text-[11px]">
+                        <SelectItem key={category.id} value={category.id} className="text-xs">
                           {category.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                   {form.formState.errors.categoryId ? (
-                    <FieldError errors={[form.formState.errors.categoryId]} className="text-[11px]" />
+                    <FieldError errors={[form.formState.errors.categoryId]} className="text-xs" />
                   ) : null}
                 </FieldContent>
               </Field>
@@ -443,16 +447,16 @@ export function TransactionFormDialog({
           )}
 
           <Field data-invalid={!!form.formState.errors.description}>
-            <FieldLabel htmlFor="transaction-description" className="text-[11px]">Deskripsi</FieldLabel>
+            <FieldLabel htmlFor="transaction-description" className="text-xs">Deskripsi</FieldLabel>
             <FieldContent>
               <Input
                 id="transaction-description"
-                className="h-8 rounded-lg text-[11px] placeholder:text-[11px]"
+                className="h-10 rounded-xl text-sm placeholder:text-xs"
                 placeholder="Contoh: Gaji bulan April, makan siang, transfer tabungan"
                 {...form.register("description")}
               />
               {form.formState.errors.description ? (
-                <FieldError errors={[form.formState.errors.description]} className="text-[11px]" />
+                <FieldError errors={[form.formState.errors.description]} className="text-xs" />
               ) : null}
             </FieldContent>
           </Field>
@@ -464,12 +468,12 @@ export function TransactionFormDialog({
               type="button"
               variant="outline"
               size="sm"
-              className="rounded-lg text-[11px] h-7"
+              className="rounded-lg text-xs h-7"
               onClick={() => setOpen(false)}
             >
               Batal
             </Button>
-            <Button type="submit" size="sm" className="rounded-lg text-[11px] h-7" disabled={pending}>
+            <Button type="submit" size="sm" className="rounded-lg text-xs h-7" disabled={pending}>
               {pending
                 ? "Menyimpan..."
                 : isEdit

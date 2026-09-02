@@ -15,17 +15,17 @@ export function ErrorState({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center rounded-xl border border-destructive/20 bg-destructive/5 px-6 py-12 text-center",
+        "flex flex-col items-center justify-center rounded-2xl border border-destructive/20 bg-destructive/5 px-6 py-12 text-center",
         className
       )}
     >
       <div className="flex size-14 items-center justify-center rounded-2xl bg-destructive/10 text-destructive ring-1 ring-destructive/20">
         <TriangleAlert className="size-6" />
       </div>
-      <h3 className="mt-5 text-base font-semibold tracking-tight text-foreground">
+      <h3 className="mt-5 text-sm font-bold tracking-tight text-foreground">
         {title}
       </h3>
-      <p className="mt-1.5 max-w-sm text-sm leading-relaxed text-muted-foreground">
+      <p className="mt-1.5 max-w-sm text-xs leading-relaxed text-muted-foreground">
         {description}
       </p>
     </div>

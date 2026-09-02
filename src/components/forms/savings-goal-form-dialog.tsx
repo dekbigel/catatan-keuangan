@@ -139,54 +139,55 @@ export function SavingsGoalFormDialog({
       <DialogTrigger
         render={
           isEdit ? (
-            <Button variant="ghost" size="sm" className="text-[11px]">
+            <Button variant="ghost" size="sm" className="text-xs">
               <SquarePen className="size-3.5" />
               Edit
             </Button>
           ) : (
-            <Button size="sm" className="rounded-full text-[11px] h-7 gap-1">
-              <Plus className="size-3.5" />
-              Tambah target
+            <Button className="h-12 gap-2 rounded-full px-5 text-sm font-bold shadow-lift">
+              <Plus className="size-5" />
+              <span className="hidden sm:inline">Tambah Target</span>
+              <span className="sm:hidden">Target</span>
             </Button>
           )
         }
       />
-      <DialogContent className="max-w-md rounded-xl p-4">
+      <DialogContent className="max-w-md rounded-2xl p-5">
         <DialogHeader className="gap-1.5">
           <DialogTitle className="text-sm">
             {isEdit ? "Edit target tabungan" : "Tambah target tabungan"}
           </DialogTitle>
-          <DialogDescription className="text-[11px]">
+          <DialogDescription className="text-xs">
             Untuk MVP, progress disimpan langsung pada nominal terkumpul agar update target tetap cepat dan sederhana.
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3" noValidate>
           <Field data-invalid={!!form.formState.errors.name}>
-            <FieldLabel htmlFor="goal-name" className="text-[11px]">Nama target</FieldLabel>
+            <FieldLabel htmlFor="goal-name" className="text-xs">Nama target</FieldLabel>
             <FieldContent>
               <Input
                 id="goal-name"
-                className="h-8 rounded-lg text-[11px] placeholder:text-[11px]"
+                className="h-10 rounded-xl text-sm placeholder:text-xs"
                 placeholder="Contoh: Dana darurat, Liburan Jepang"
                 {...form.register("name")}
               />
               {form.formState.errors.name ? (
-                <FieldError errors={[form.formState.errors.name]} className="text-[11px]" />
+                <FieldError errors={[form.formState.errors.name]} className="text-xs" />
               ) : null}
             </FieldContent>
           </Field>
 
           <div className="grid gap-3 sm:grid-cols-2">
             <Field data-invalid={!!form.formState.errors.targetAmount}>
-              <FieldLabel htmlFor="target-amount" className="text-[11px]">Target nominal</FieldLabel>
+              <FieldLabel htmlFor="target-amount" className="text-xs">Target nominal</FieldLabel>
               <FieldContent>
                 <div className="flex gap-2">
                   <Input
                     id="target-amount"
                     type="text"
                     inputMode="numeric"
-                    className="h-8 rounded-lg text-[11px] flex-1"
+                    className="h-10 rounded-xl text-sm flex-1"
                     placeholder="0"
                     value={displayTargetAmount}
                     onChange={(e) => {
@@ -205,7 +206,7 @@ export function SavingsGoalFormDialog({
                     type="button"
                     variant="outline"
                     size="sm"
-                    className="h-8 rounded-lg text-[11px] px-2.5"
+                    className="h-10 rounded-xl text-sm px-2.5"
                     onClick={() => {
                       const raw = displayTargetAmount.replace(/\./g, "");
                       const num = raw ? Number(raw) * 1000 : 0;
@@ -220,20 +221,20 @@ export function SavingsGoalFormDialog({
                   </Button>
                 </div>
                 {form.formState.errors.targetAmount ? (
-                  <FieldError errors={[form.formState.errors.targetAmount]} className="text-[11px]" />
+                  <FieldError errors={[form.formState.errors.targetAmount]} className="text-xs" />
                 ) : null}
               </FieldContent>
             </Field>
 
             <Field data-invalid={!!form.formState.errors.currentAmount}>
-              <FieldLabel htmlFor="current-amount" className="text-[11px]">Nominal terkumpul</FieldLabel>
+              <FieldLabel htmlFor="current-amount" className="text-xs">Nominal terkumpul</FieldLabel>
               <FieldContent>
                 <div className="flex gap-2">
                   <Input
                     id="current-amount"
                     type="text"
                     inputMode="numeric"
-                    className="h-8 rounded-lg text-[11px] flex-1"
+                    className="h-10 rounded-xl text-sm flex-1"
                     placeholder="0"
                     value={displayCurrentAmount}
                     onChange={(e) => {
@@ -252,7 +253,7 @@ export function SavingsGoalFormDialog({
                     type="button"
                     variant="outline"
                     size="sm"
-                    className="h-8 rounded-lg text-[11px] px-2.5"
+                    className="h-10 rounded-xl text-sm px-2.5"
                     onClick={() => {
                       const raw = displayCurrentAmount.replace(/\./g, "");
                       const num = raw ? Number(raw) * 1000 : 0;
@@ -267,7 +268,7 @@ export function SavingsGoalFormDialog({
                   </Button>
                 </div>
                 {form.formState.errors.currentAmount ? (
-                  <FieldError errors={[form.formState.errors.currentAmount]} className="text-[11px]" />
+                  <FieldError errors={[form.formState.errors.currentAmount]} className="text-xs" />
                 ) : null}
               </FieldContent>
             </Field>
@@ -275,22 +276,22 @@ export function SavingsGoalFormDialog({
 
           <div className="grid gap-3 sm:grid-cols-2">
             <Field data-invalid={!!form.formState.errors.targetDate}>
-              <FieldLabel htmlFor="target-date" className="text-[11px]">Target date</FieldLabel>
+              <FieldLabel htmlFor="target-date" className="text-xs">Target date</FieldLabel>
               <FieldContent>
                 <Input
                   id="target-date"
                   type="date"
-                  className="h-8 rounded-lg text-[11px]"
+                  className="h-10 rounded-xl text-sm"
                   {...form.register("targetDate")}
                 />
                 {form.formState.errors.targetDate ? (
-                  <FieldError errors={[form.formState.errors.targetDate]} className="text-[11px]" />
+                  <FieldError errors={[form.formState.errors.targetDate]} className="text-xs" />
                 ) : null}
               </FieldContent>
             </Field>
 
             <Field data-invalid={!!form.formState.errors.status}>
-              <FieldLabel className="text-[11px]">Status</FieldLabel>
+              <FieldLabel className="text-xs">Status</FieldLabel>
               <FieldContent>
                 <Select
                   value={selectedStatus ?? "active"}
@@ -302,21 +303,21 @@ export function SavingsGoalFormDialog({
                     )
                   }
                 >
-                  <SelectTrigger className="h-8 w-full rounded-lg text-[11px]">
+                  <SelectTrigger className="h-10 w-full rounded-xl text-sm">
                     <SelectValue placeholder="Pilih status">
                       {statusLabels[selectedStatus]}
                     </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     {savingsGoalStatuses.map((status) => (
-                      <SelectItem key={status} value={status} className="text-[11px]">
+                      <SelectItem key={status} value={status} className="text-xs">
                         {statusLabels[status]}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
                 {form.formState.errors.status ? (
-                  <FieldError errors={[form.formState.errors.status]} className="text-[11px]" />
+                  <FieldError errors={[form.formState.errors.status]} className="text-xs" />
                 ) : null}
               </FieldContent>
             </Field>
@@ -329,12 +330,12 @@ export function SavingsGoalFormDialog({
               type="button"
               variant="outline"
               size="sm"
-              className="rounded-lg text-[11px] h-7"
+              className="rounded-lg text-xs h-7"
               onClick={() => setOpen(false)}
             >
               Batal
             </Button>
-            <Button type="submit" size="sm" className="rounded-lg text-[11px] h-7" disabled={pending}>
+            <Button type="submit" size="sm" className="rounded-lg text-xs h-7" disabled={pending}>
               {pending
                 ? "Menyimpan..."
                 : isEdit

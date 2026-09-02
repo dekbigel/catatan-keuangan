@@ -93,7 +93,7 @@ export function TransactionFilters({
           type="button"
           variant="outline"
           size="sm"
-          className="h-7 gap-1.5 rounded-lg text-[11px]"
+          className="h-9 gap-1.5 rounded-xl text-xs"
           onClick={() => setOpen((v) => !v)}
         >
           {open ? (
@@ -106,7 +106,7 @@ export function TransactionFilters({
               <SlidersHorizontal className="size-3.5" />
               Tampilkan Filter
               {activeCount > 0 && (
-                <span className="ml-0.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-medium text-primary-foreground">
+                <span className="ml-0.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[11px] font-medium text-primary-foreground">
                   {activeCount}
                 </span>
               )}
@@ -119,7 +119,7 @@ export function TransactionFilters({
           className={buttonVariants({
             variant: isTodayActive ? "default" : "outline",
             size: "sm",
-            className: "h-7 gap-1.5 rounded-lg text-[11px]",
+            className: "h-9 gap-1.5 rounded-xl text-xs",
           })}
         >
           <Calendar className="size-3.5" />
@@ -129,39 +129,39 @@ export function TransactionFilters({
         {activeCount > 0 && !open && (
           <div className="flex flex-wrap items-center gap-1">
             {filters.q && (
-              <span className="inline-flex items-center gap-1 rounded-md border border-border bg-muted/50 px-1.5 py-0.5 text-[10px] text-muted-foreground">
+              <span className="inline-flex items-center gap-1 rounded-md border border-border bg-muted/50 px-1.5 py-0.5 text-[11px] text-muted-foreground">
                 <Search className="size-3" />
                 {filters.q}
               </span>
             )}
             {filters.type && (
-              <span className="inline-flex items-center rounded-md border border-border bg-muted/50 px-1.5 py-0.5 text-[10px] text-muted-foreground capitalize">
+              <span className="inline-flex items-center rounded-md border border-border bg-muted/50 px-1.5 py-0.5 text-[11px] text-muted-foreground capitalize">
                 {typeLabels[filters.type]}
               </span>
             )}
             {filters.dateFrom && (
-              <span className="inline-flex items-center rounded-md border border-border bg-muted/50 px-1.5 py-0.5 text-[10px] text-muted-foreground">
+              <span className="inline-flex items-center rounded-md border border-border bg-muted/50 px-1.5 py-0.5 text-[11px] text-muted-foreground">
                 {filters.dateFrom}
               </span>
             )}
             {filters.dateTo && (
-              <span className="inline-flex items-center rounded-md border border-border bg-muted/50 px-1.5 py-0.5 text-[10px] text-muted-foreground">
+              <span className="inline-flex items-center rounded-md border border-border bg-muted/50 px-1.5 py-0.5 text-[11px] text-muted-foreground">
                 {filters.dateTo}
               </span>
             )}
             {filters.accountId && (
-              <span className="inline-flex items-center rounded-md border border-border bg-muted/50 px-1.5 py-0.5 text-[10px] text-muted-foreground">
+              <span className="inline-flex items-center rounded-md border border-border bg-muted/50 px-1.5 py-0.5 text-[11px] text-muted-foreground">
                 {accounts.find((a) => a.id === filters.accountId)?.name ?? "Akun"}
               </span>
             )}
             {filters.categoryId && (
-              <span className="inline-flex items-center rounded-md border border-border bg-muted/50 px-1.5 py-0.5 text-[10px] text-muted-foreground">
+              <span className="inline-flex items-center rounded-md border border-border bg-muted/50 px-1.5 py-0.5 text-[11px] text-muted-foreground">
                 {categories.find((c) => c.id === filters.categoryId)?.name ?? "Kategori"}
               </span>
             )}
             <Link
               href="/transactions"
-              className="inline-flex items-center gap-1 rounded-md border border-border px-1.5 py-0.5 text-[10px] text-muted-foreground hover:bg-muted transition-colors"
+              className="inline-flex items-center gap-1 rounded-md border border-border px-1.5 py-0.5 text-[11px] text-muted-foreground hover:bg-muted transition-colors"
             >
               <RotateCcw className="size-3" />
               Reset
@@ -179,7 +179,7 @@ export function TransactionFilters({
           <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
             {/* Kata kunci */}
             <div className="sm:col-span-2 xl:col-span-2">
-              <label className="mb-1 block text-[11px] font-medium text-foreground">
+              <label className="mb-1 block text-xs font-medium text-foreground">
                 Kata kunci
               </label>
               <div className="relative">
@@ -188,53 +188,53 @@ export function TransactionFilters({
                   name="q"
                   defaultValue={filters.q}
                   placeholder="Cari deskripsi..."
-                  className="h-8 rounded-lg bg-background pl-8 text-[11px] placeholder:text-[11px]"
+                  className="h-8 rounded-lg bg-background pl-8 text-xs placeholder:text-xs"
                 />
               </div>
             </div>
 
             {/* Tanggal awal */}
             <div>
-              <label className="mb-1 block text-[11px] font-medium text-foreground">
+              <label className="mb-1 block text-xs font-medium text-foreground">
                 Tanggal awal
               </label>
               <Input
                 type="date"
                 name="dateFrom"
                 defaultValue={filters.dateFrom}
-                className="h-8 rounded-lg bg-background text-[11px]"
+                className="h-8 rounded-lg bg-background text-xs"
               />
             </div>
 
             {/* Tanggal akhir */}
             <div>
-              <label className="mb-1 block text-[11px] font-medium text-foreground">
+              <label className="mb-1 block text-xs font-medium text-foreground">
                 Tanggal akhir
               </label>
               <Input
                 type="date"
                 name="dateTo"
                 defaultValue={filters.dateTo}
-                className="h-8 rounded-lg bg-background text-[11px]"
+                className="h-8 rounded-lg bg-background text-xs"
               />
             </div>
 
             {/* Tipe */}
             <div>
-              <label className="mb-1 block text-[11px] font-medium text-foreground">
+              <label className="mb-1 block text-xs font-medium text-foreground">
                 Tipe
               </label>
               <Select value={type} onValueChange={(v) => setType(v ?? "")}>
-                <SelectTrigger className="h-8 w-full rounded-lg bg-background text-[11px]">
+                <SelectTrigger className="h-8 w-full rounded-lg bg-background text-xs">
                   <SelectValue placeholder="Semua tipe">
                     {typeLabels[type] || "Semua tipe"}
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="" className="text-[11px]">Semua tipe</SelectItem>
-                  <SelectItem value="income" className="text-[11px]">Income</SelectItem>
-                  <SelectItem value="expense" className="text-[11px]">Expense</SelectItem>
-                  <SelectItem value="transfer" className="text-[11px]">Transfer</SelectItem>
+                  <SelectItem value="" className="text-xs">Semua tipe</SelectItem>
+                  <SelectItem value="income" className="text-xs">Income</SelectItem>
+                  <SelectItem value="expense" className="text-xs">Expense</SelectItem>
+                  <SelectItem value="transfer" className="text-xs">Transfer</SelectItem>
                 </SelectContent>
               </Select>
               <input type="hidden" name="type" value={type} />
@@ -242,11 +242,11 @@ export function TransactionFilters({
 
             {/* Akun */}
             <div>
-              <label className="mb-1 block text-[11px] font-medium text-foreground">
+              <label className="mb-1 block text-xs font-medium text-foreground">
                 Akun
               </label>
               <Select value={accountId} onValueChange={(v) => setAccountId(v ?? "")}>
-                <SelectTrigger className="h-8 w-full rounded-lg bg-background text-[11px]">
+                <SelectTrigger className="h-8 w-full rounded-lg bg-background text-xs">
                   <SelectValue placeholder="Semua akun">
                     {accountId
                       ? accounts.find((a) => a.id === accountId)?.name || "Semua akun"
@@ -254,9 +254,9 @@ export function TransactionFilters({
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="" className="text-[11px]">Semua akun</SelectItem>
+                  <SelectItem value="" className="text-xs">Semua akun</SelectItem>
                   {accounts.map((account) => (
-                    <SelectItem key={account.id} value={account.id} className="text-[11px]">
+                    <SelectItem key={account.id} value={account.id} className="text-xs">
                       {account.name}
                     </SelectItem>
                   ))}
@@ -267,11 +267,11 @@ export function TransactionFilters({
 
             {/* Kategori */}
             <div className="sm:col-span-2 xl:col-span-2">
-              <label className="mb-1 block text-[11px] font-medium text-foreground">
+              <label className="mb-1 block text-xs font-medium text-foreground">
                 Kategori
               </label>
               <Select value={categoryId} onValueChange={(v) => setCategoryId(v ?? "")}>
-                <SelectTrigger className="h-8 w-full rounded-lg bg-background text-[11px]">
+                <SelectTrigger className="h-8 w-full rounded-lg bg-background text-xs">
                   <SelectValue placeholder="Semua kategori">
                     {categoryId
                       ? categories.find((c) => c.id === categoryId)?.name || "Semua kategori"
@@ -279,9 +279,9 @@ export function TransactionFilters({
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="" className="text-[11px]">Semua kategori</SelectItem>
+                  <SelectItem value="" className="text-xs">Semua kategori</SelectItem>
                   {categories.map((category) => (
-                    <SelectItem key={category.id} value={category.id} className="text-[11px]">
+                    <SelectItem key={category.id} value={category.id} className="text-xs">
                       {category.name}
                     </SelectItem>
                   ))}
@@ -292,7 +292,7 @@ export function TransactionFilters({
 
             {/* Tombol aksi */}
             <div className="flex items-end gap-2 sm:col-span-2 xl:col-span-2 xl:justify-end">
-              <Button type="submit" size="sm" className="h-7 rounded-lg text-[11px]">
+              <Button type="submit" size="sm" className="h-9 rounded-xl text-xs">
                 <Filter className="size-3 mr-1" />
                 Terapkan
               </Button>
@@ -301,7 +301,7 @@ export function TransactionFilters({
                 className={buttonVariants({
                   variant: "outline",
                   size: "sm",
-                  className: "h-7 rounded-lg text-[11px] gap-1",
+                  className: "h-9 rounded-xl text-xs gap-1",
                 })}
               >
                 <RotateCcw className="size-3" />

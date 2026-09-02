@@ -118,44 +118,45 @@ export function CategoryFormDialog({
       <DialogTrigger
         render={
           isEdit ? (
-            <Button variant="ghost" size="sm" className="text-[11px]">
+            <Button variant="ghost" size="sm" className="text-xs">
               <SquarePen className="size-3.5" />
               Edit
             </Button>
           ) : (
-            <Button size="sm" className="rounded-full text-[11px] h-7 gap-1">
-              <Plus className="size-3.5" />
-              Tambah kategori
+            <Button className="h-12 gap-2 rounded-full px-5 text-sm font-bold shadow-lift">
+              <Plus className="size-5" />
+              <span className="hidden sm:inline">Tambah Kategori</span>
+              <span className="sm:hidden">Kategori</span>
             </Button>
           )
         }
       />
-      <DialogContent className="max-w-md rounded-xl p-4">
+      <DialogContent className="max-w-md rounded-2xl p-5">
         <DialogHeader className="gap-1.5">
           <DialogTitle className="text-sm">{isEdit ? "Edit kategori" : "Tambah kategori"}</DialogTitle>
-          <DialogDescription className="text-[11px]">
+          <DialogDescription className="text-xs">
             Pisahkan kategori income dan expense agar transaksi serta budget lebih rapi.
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3" noValidate>
           <Field data-invalid={!!form.formState.errors.name}>
-            <FieldLabel htmlFor="category-name" className="text-[11px]">Nama kategori</FieldLabel>
+            <FieldLabel htmlFor="category-name" className="text-xs">Nama kategori</FieldLabel>
             <FieldContent>
               <Input
                 id="category-name"
                 placeholder="Contoh: Gaji, Makan, Transport"
-                className="h-8 rounded-lg text-[11px] placeholder:text-[11px]"
+                className="h-10 rounded-xl text-sm placeholder:text-xs"
                 {...form.register("name")}
               />
               {form.formState.errors.name ? (
-                <FieldError errors={[form.formState.errors.name]} className="text-[11px]" />
+                <FieldError errors={[form.formState.errors.name]} className="text-xs" />
               ) : null}
             </FieldContent>
           </Field>
 
           <Field data-invalid={!!form.formState.errors.type}>
-            <FieldLabel className="text-[11px]">Tipe kategori</FieldLabel>
+            <FieldLabel className="text-xs">Tipe kategori</FieldLabel>
             <FieldContent>
               <Select
                 value={selectedType}
@@ -165,28 +166,28 @@ export function CategoryFormDialog({
                   })
                 }
               >
-                <SelectTrigger className="h-8 w-full rounded-lg text-[11px]">
+                <SelectTrigger className="h-10 w-full rounded-xl text-sm">
                   <SelectValue placeholder="Pilih tipe kategori">
                     {selectedType ? typeLabels[selectedType as keyof typeof typeLabels] : "Pilih tipe kategori"}
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   {categoryTypes.map((type) => (
-                    <SelectItem key={type} value={type} className="text-[11px]">
+                    <SelectItem key={type} value={type} className="text-xs">
                       {typeLabels[type]}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
               {form.formState.errors.type ? (
-                <FieldError errors={[form.formState.errors.type]} className="text-[11px]" />
+                <FieldError errors={[form.formState.errors.type]} className="text-xs" />
               ) : null}
             </FieldContent>
           </Field>
 
           <div className="grid gap-3 sm:grid-cols-[120px_1fr]">
             <Field data-invalid={!!form.formState.errors.color}>
-              <FieldLabel htmlFor="category-color" className="text-[11px]">Warna</FieldLabel>
+              <FieldLabel htmlFor="category-color" className="text-xs">Warna</FieldLabel>
               <FieldContent>
                 <Input
                   id="category-color"
@@ -195,22 +196,22 @@ export function CategoryFormDialog({
                   {...form.register("color")}
                 />
                 {form.formState.errors.color ? (
-                  <FieldError errors={[form.formState.errors.color]} className="text-[11px]" />
+                  <FieldError errors={[form.formState.errors.color]} className="text-xs" />
                 ) : null}
               </FieldContent>
             </Field>
 
             <Field data-invalid={!!form.formState.errors.icon}>
-              <FieldLabel htmlFor="category-icon" className="text-[11px]">Icon (opsional)</FieldLabel>
+              <FieldLabel htmlFor="category-icon" className="text-xs">Icon (opsional)</FieldLabel>
               <FieldContent>
                 <Input
                   id="category-icon"
                   placeholder="Contoh: wallet, food, car"
-                  className="h-8 rounded-lg text-[11px] placeholder:text-[11px]"
+                  className="h-10 rounded-xl text-sm placeholder:text-xs"
                   {...form.register("icon")}
                 />
                 {form.formState.errors.icon ? (
-                  <FieldError errors={[form.formState.errors.icon]} className="text-[11px]" />
+                  <FieldError errors={[form.formState.errors.icon]} className="text-xs" />
                 ) : null}
               </FieldContent>
             </Field>
@@ -223,12 +224,12 @@ export function CategoryFormDialog({
               type="button"
               variant="outline"
               size="sm"
-              className="rounded-lg text-[11px] h-7"
+              className="rounded-lg text-xs h-7"
               onClick={() => setOpen(false)}
             >
               Batal
             </Button>
-            <Button type="submit" size="sm" className="rounded-lg text-[11px] h-7" disabled={pending}>
+            <Button type="submit" size="sm" className="rounded-lg text-xs h-7" disabled={pending}>
               {pending
                 ? "Menyimpan..."
                 : isEdit
