@@ -18,7 +18,7 @@ export function BudgetDeleteButton({ budgetId }: { budgetId: string }) {
   return (
     <ConfirmDialog
       trigger={
-        <Button variant="ghost" size="sm" className="text-[11px]">
+        <Button variant="ghost" size="sm" className="text-xs">
           <Trash2 className="size-3.5" />
           Hapus
         </Button>

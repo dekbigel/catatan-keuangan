@@ -55,19 +55,19 @@ export function ConfirmDialog({
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger render={trigger} />
-      <AlertDialogContent className="rounded-xl p-4">
+      <AlertDialogContent className="rounded-2xl p-5">
         <AlertDialogHeader className="gap-1.5">
           <AlertDialogTitle className="text-sm">{title}</AlertDialogTitle>
-          <AlertDialogDescription className="text-[11px] text-muted-foreground">
+          <AlertDialogDescription className="text-xs text-muted-foreground">
             {description}
           </AlertDialogDescription>
         </AlertDialogHeader>
         {error ? (
-          <p className="text-[11px] text-rose-600">{error}</p>
+          <p className="text-xs text-rose-600">{error}</p>
         ) : null}
         <AlertDialogFooter className="mt-3">
           <AlertDialogCancel
-            className="text-[11px] h-7 rounded-lg"
+            className="text-xs h-9 rounded-xl"
             disabled={pending}
           >
             {cancelLabel}
@@ -75,7 +75,7 @@ export function ConfirmDialog({
           <Button
             type="button"
             size="sm"
-            className="text-[11px] h-7 rounded-lg"
+            className="text-xs h-9 rounded-xl"
             disabled={pending}
             onClick={handleConfirm}
           >

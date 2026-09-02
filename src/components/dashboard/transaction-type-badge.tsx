@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import { getTransactionTypeMeta, type TransactionType } from "@/lib/utils/finance";
 import { cn } from "@/lib/utils";
 
@@ -13,7 +12,7 @@ export function TransactionTypeBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium",
+        "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium",
         type === "income" &&
         "bg-emerald-500/10 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400",
         type === "expense" &&

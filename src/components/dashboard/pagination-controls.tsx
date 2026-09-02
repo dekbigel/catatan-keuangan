@@ -38,9 +38,9 @@ export function PaginationControls({
   searchParams,
 }: PaginationControlsProps) {
   return (
-    <div className="flex flex-col gap-3 border-t border-slate-200 pt-4 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col gap-3 border-t border-border/60 pt-4 sm:flex-row sm:items-center sm:justify-between">
       <p className="text-xs text-muted-foreground">
-        Halaman {page} dari {totalPages} | {totalCount} transaksi ditemukan
+        Halaman {page} dari {totalPages} • {totalCount} transaksi ditemukan
       </p>
       <div className="flex items-center gap-2">
         <Link
@@ -51,7 +51,7 @@ export function PaginationControls({
             buttonVariants({
               variant: "outline",
               size: "sm",
-              className: "h-7 rounded-lg text-[11px]",
+              className: "h-8 rounded-xl text-xs",
             }),
             page <= 1 && "pointer-events-none opacity-50",
           )}
@@ -67,7 +67,7 @@ export function PaginationControls({
             buttonVariants({
               variant: "outline",
               size: "sm",
-              className: "h-7 rounded-lg text-[11px]",
+              className: "h-8 rounded-xl text-xs",
             }),
             page >= totalPages && "pointer-events-none opacity-50",
           )}

@@ -32,7 +32,7 @@ export function TransactionDeleteButton({
   return (
     <ConfirmDialog
       trigger={
-        <Button variant="ghost" size="sm" disabled={pending} className="text-[11px]">
+        <Button variant="ghost" size="sm" disabled={pending} className="text-xs">
           <Trash2 className="size-3.5" />
           {pending ? "Menghapus..." : "Hapus"}
         </Button>

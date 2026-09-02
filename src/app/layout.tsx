@@ -28,11 +28,25 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fafaf9" },
-    { media: "(prefers-color-scheme: dark)", color: "#0c0a09" },
+    { media: "(prefers-color-scheme: light)", color: "#f6f8f7" },
+    { media: "(prefers-color-scheme: dark)", color: "#0c1210" },
   ],
 };
+
+const themeInitScript = `
+(() => {
+  try {
+    const stored = localStorage.getItem("ck-theme");
+    const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const dark = stored ? stored === "dark" : systemDark;
+    document.documentElement.classList.toggle("dark", dark);
+  } catch {}
+})();
+`;
 
 export default function RootLayout({
   children,
@@ -42,9 +56,12 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${jakarta.variable} dark h-full antialiased`}
+      className={`${jakarta.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

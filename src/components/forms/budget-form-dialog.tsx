@@ -142,29 +142,30 @@ export function BudgetFormDialog({
       <DialogTrigger
         render={
           isEdit ? (
-            <Button variant="ghost" size="sm" className="text-[11px]">
+            <Button variant="ghost" size="sm" className="text-xs">
               <SquarePen className="size-3.5" />
               Edit
             </Button>
           ) : (
-            <Button size="sm" className="rounded-full text-[11px] h-7 gap-1">
-              <Plus className="size-3.5" />
-              Tambah budget
+            <Button className="h-12 gap-2 rounded-full px-5 text-sm font-bold shadow-lift">
+              <Plus className="size-5" />
+              <span className="hidden sm:inline">Tambah Budget</span>
+              <span className="sm:hidden">Budget</span>
             </Button>
           )
         }
       />
-      <DialogContent className="max-w-md rounded-xl p-4">
+      <DialogContent className="max-w-md rounded-2xl p-5">
         <DialogHeader className="gap-1.5">
           <DialogTitle className="text-sm">{isEdit ? "Edit budget" : "Tambah budget"}</DialogTitle>
-          <DialogDescription className="text-[11px]">
+          <DialogDescription className="text-xs">
             Budget hanya berlaku untuk kategori expense dan unik per kategori pada satu periode.
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3" noValidate>
           <Field data-invalid={!!form.formState.errors.categoryId}>
-            <FieldLabel className="text-[11px]">Kategori expense</FieldLabel>
+            <FieldLabel className="text-xs">Kategori expense</FieldLabel>
             <FieldContent>
               <Select
                 value={selectedCategoryId ?? ""}
@@ -174,28 +175,28 @@ export function BudgetFormDialog({
                   })
                 }
               >
-                <SelectTrigger className="h-8 w-full rounded-lg text-[11px]">
+                <SelectTrigger className="h-10 w-full rounded-xl text-sm">
                   <SelectValue placeholder="Pilih kategori expense">
                     {expenseCategories.find((c) => c.id === selectedCategoryId)?.name}
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   {expenseCategories.map((category) => (
-                    <SelectItem key={category.id} value={category.id} className="text-[11px]">
+                    <SelectItem key={category.id} value={category.id} className="text-xs">
                       {category.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
               {form.formState.errors.categoryId ? (
-                <FieldError errors={[form.formState.errors.categoryId]} className="text-[11px]" />
+                <FieldError errors={[form.formState.errors.categoryId]} className="text-xs" />
               ) : null}
             </FieldContent>
           </Field>
 
           <div className="grid gap-3 sm:grid-cols-2">
             <Field data-invalid={!!form.formState.errors.periodMonth}>
-              <FieldLabel className="text-[11px]">Bulan</FieldLabel>
+              <FieldLabel className="text-xs">Bulan</FieldLabel>
               <FieldContent>
                 <Select
                   value={selectedPeriodMonth ? String(selectedPeriodMonth) : ""}
@@ -205,52 +206,52 @@ export function BudgetFormDialog({
                     })
                   }
                 >
-                  <SelectTrigger className="h-8 w-full rounded-lg text-[11px]">
+                  <SelectTrigger className="h-10 w-full rounded-xl text-sm">
                     <SelectValue placeholder="Pilih bulan">
                       {monthOptions.find((m) => m.value === selectedPeriodMonth)?.label}
                     </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     {monthOptions.map((month) => (
-                      <SelectItem key={month.value} value={String(month.value)} className="text-[11px]">
+                      <SelectItem key={month.value} value={String(month.value)} className="text-xs">
                         {month.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
                 {form.formState.errors.periodMonth ? (
-                  <FieldError errors={[form.formState.errors.periodMonth]} className="text-[11px]" />
+                  <FieldError errors={[form.formState.errors.periodMonth]} className="text-xs" />
                 ) : null}
               </FieldContent>
             </Field>
 
             <Field data-invalid={!!form.formState.errors.periodYear}>
-              <FieldLabel htmlFor="budget-year" className="text-[11px]">Tahun</FieldLabel>
+              <FieldLabel htmlFor="budget-year" className="text-xs">Tahun</FieldLabel>
               <FieldContent>
                 <Input
                   id="budget-year"
                   type="number"
                   min="2000"
                   max="2100"
-                  className="h-8 rounded-lg text-[11px]"
+                  className="h-10 rounded-xl text-sm"
                   {...form.register("periodYear", { valueAsNumber: true })}
                 />
                 {form.formState.errors.periodYear ? (
-                  <FieldError errors={[form.formState.errors.periodYear]} className="text-[11px]" />
+                  <FieldError errors={[form.formState.errors.periodYear]} className="text-xs" />
                 ) : null}
               </FieldContent>
             </Field>
           </div>
 
           <Field data-invalid={!!form.formState.errors.amount}>
-            <FieldLabel htmlFor="budget-amount" className="text-[11px]">Nominal budget</FieldLabel>
+            <FieldLabel htmlFor="budget-amount" className="text-xs">Nominal budget</FieldLabel>
             <FieldContent>
               <div className="flex gap-2">
                 <Input
                   id="budget-amount"
                   type="text"
                   inputMode="numeric"
-                  className="h-8 rounded-lg text-[11px] flex-1"
+                  className="h-10 rounded-xl text-sm flex-1"
                   placeholder="0"
                   value={displayAmount}
                   onChange={(e) => {
@@ -269,7 +270,7 @@ export function BudgetFormDialog({
                   type="button"
                   variant="outline"
                   size="sm"
-                  className="h-8 rounded-lg text-[11px] px-2.5"
+                  className="h-10 rounded-xl text-sm px-2.5"
                   onClick={() => {
                     const raw = displayAmount.replace(/\./g, "");
                     const num = raw ? Number(raw) * 1000 : 0;
@@ -284,7 +285,7 @@ export function BudgetFormDialog({
                 </Button>
               </div>
               {form.formState.errors.amount ? (
-                <FieldError errors={[form.formState.errors.amount]} className="text-[11px]" />
+                <FieldError errors={[form.formState.errors.amount]} className="text-xs" />
               ) : null}
             </FieldContent>
           </Field>
@@ -296,12 +297,12 @@ export function BudgetFormDialog({
               type="button"
               variant="outline"
               size="sm"
-              className="rounded-lg text-[11px] h-7"
+              className="rounded-lg text-xs h-7"
               onClick={() => setOpen(false)}
             >
               Batal
             </Button>
-            <Button type="submit" size="sm" className="rounded-lg text-[11px] h-7" disabled={pending}>
+            <Button type="submit" size="sm" className="rounded-lg text-xs h-7" disabled={pending}>
               {pending
                 ? "Menyimpan..."
                 : isEdit

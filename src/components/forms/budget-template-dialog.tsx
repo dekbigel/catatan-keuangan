@@ -175,18 +175,18 @@ export function BudgetTemplateDialog({
             <DialogTrigger
                 render={
                     <Button
-                        size="sm"
-                        className="rounded-full text-[11px] h-7 w-7 p-0 bg-slate-600 hover:bg-slate-700 dark:bg-slate-500 dark:hover:bg-slate-400"
+                        variant="outline"
+                        className="h-12 w-12 rounded-full border-border/70 bg-card p-0 shadow-lift hover:border-primary/30 hover:text-primary"
                         title="Kelola budget otomatis"
                     >
-                        <Settings className="size-3.5" />
+                        <Settings className="size-5" />
                     </Button>
                 }
             />
-            <DialogContent className="max-h-[90vh] max-w-md overflow-y-auto rounded-xl p-4">
+            <DialogContent className="max-h-[90vh] max-w-md overflow-y-auto rounded-2xl p-5">
                 <DialogHeader className="gap-1.5">
                     <DialogTitle className="text-sm">Kelola Budget Otomatis</DialogTitle>
-                    <DialogDescription className="text-[11px]">
+                    <DialogDescription className="text-xs">
                         Template budget akan otomatis dibuat setiap bulan untuk kategori
                         yang dipilih.
                     </DialogDescription>
@@ -198,7 +198,7 @@ export function BudgetTemplateDialog({
                     noValidate
                 >
                     <Field data-invalid={!!form.formState.errors.categoryId}>
-                        <FieldLabel className="text-[11px]">Kategori expense</FieldLabel>
+                        <FieldLabel className="text-xs">Kategori expense</FieldLabel>
                         <FieldContent>
                             <Select
                                 value={selectedCategoryId ?? ""}
@@ -208,7 +208,7 @@ export function BudgetTemplateDialog({
                                     })
                                 }
                             >
-                                <SelectTrigger className="h-8 w-full rounded-lg text-[11px]">
+                                <SelectTrigger className="h-8 w-full rounded-lg text-xs">
                                     <SelectValue placeholder="Pilih kategori expense">
                                         {availableCategories.find((c) => c.id === selectedCategoryId)
                                             ?.name}
@@ -219,7 +219,7 @@ export function BudgetTemplateDialog({
                                         <SelectItem
                                             key={category.id}
                                             value={category.id}
-                                            className="text-[11px]"
+                                            className="text-xs"
                                         >
                                             {category.name}
                                         </SelectItem>
@@ -229,14 +229,14 @@ export function BudgetTemplateDialog({
                             {form.formState.errors.categoryId ? (
                                 <FieldError
                                     errors={[form.formState.errors.categoryId]}
-                                    className="text-[11px]"
+                                    className="text-xs"
                                 />
                             ) : null}
                         </FieldContent>
                     </Field>
 
                     <Field data-invalid={!!form.formState.errors.amount}>
-                        <FieldLabel htmlFor="template-amount" className="text-[11px]">
+                        <FieldLabel htmlFor="template-amount" className="text-xs">
                             Nominal budget
                         </FieldLabel>
                         <FieldContent>
@@ -245,7 +245,7 @@ export function BudgetTemplateDialog({
                                     id="template-amount"
                                     type="text"
                                     inputMode="numeric"
-                                    className="h-8 rounded-lg text-[11px] flex-1"
+                                    className="h-8 rounded-lg text-xs flex-1"
                                     placeholder="0"
                                     value={displayAmount}
                                     onChange={(e) => {
@@ -266,7 +266,7 @@ export function BudgetTemplateDialog({
                                     type="button"
                                     variant="outline"
                                     size="sm"
-                                    className="h-8 rounded-lg text-[11px] px-2.5"
+                                    className="h-8 rounded-lg text-xs px-2.5"
                                     onClick={() => {
                                         const raw = displayAmount.replace(/\./g, "");
                                         const num = raw ? Number(raw) * 1000 : 0;
@@ -283,19 +283,19 @@ export function BudgetTemplateDialog({
                             {form.formState.errors.amount ? (
                                 <FieldError
                                     errors={[form.formState.errors.amount]}
-                                    className="text-[11px]"
+                                    className="text-xs"
                                 />
                             ) : null}
                         </FieldContent>
                     </Field>
 
                     <div className="flex items-center justify-between rounded-lg border border-border/60 bg-muted/30 p-2.5">
-                        <span className="text-[11px] font-medium">Aktifkan template</span>
+                        <span className="text-xs font-medium">Aktifkan template</span>
                         <Button
                             type="button"
                             variant={isActive ? "default" : "outline"}
                             size="sm"
-                            className="h-7 gap-1 rounded-lg text-[11px]"
+                            className="h-7 gap-1 rounded-lg text-xs"
                             onClick={() =>
                                 form.setValue("isActive", !isActive, { shouldValidate: true })
                             }
@@ -324,7 +324,7 @@ export function BudgetTemplateDialog({
                                 type="button"
                                 variant="outline"
                                 size="sm"
-                                className="h-7 rounded-lg text-[11px] flex-1"
+                                className="h-9 rounded-xl text-xs flex-1"
                                 onClick={() => {
                                     setEditingId(null);
                                     form.reset(defaultValues);
@@ -338,7 +338,7 @@ export function BudgetTemplateDialog({
                         <Button
                             type="submit"
                             size="sm"
-                            className="h-7 rounded-lg text-[11px] flex-1"
+                            className="h-9 rounded-xl text-xs flex-1"
                             disabled={pending}
                         >
                             <Plus className="size-3.5 mr-1" />
@@ -353,7 +353,7 @@ export function BudgetTemplateDialog({
 
                 {templates.length > 0 && (
                     <div className="space-y-2 pt-2">
-                        <p className="text-[11px] font-semibold text-muted-foreground">
+                        <p className="text-xs font-semibold text-muted-foreground">
                             Template tersimpan
                         </p>
                         <div className="space-y-1.5">
@@ -366,14 +366,14 @@ export function BudgetTemplateDialog({
                                         <CategoryColorDot color={template.categoryColor} />
                                         <div className="min-w-0">
                                             <p
-                                                className={`truncate text-[11px] font-medium ${template.isActive
+                                                className={`truncate text-xs font-medium ${template.isActive
                                                     ? "text-foreground"
                                                     : "text-muted-foreground line-through"
                                                     }`}
                                             >
                                                 {template.categoryName}
                                             </p>
-                                            <p className="text-[10px] text-muted-foreground">
+                                            <p className="text-[11px] text-muted-foreground">
                                                 {formatCurrencyIDR(template.amount)}
                                             </p>
                                         </div>
@@ -384,7 +384,7 @@ export function BudgetTemplateDialog({
                                             type="button"
                                             variant="ghost"
                                             size="sm"
-                                            className={`h-6 w-6 rounded-md p-0 text-[10px] ${template.isActive
+                                            className={`h-6 w-6 rounded-md p-0 text-[11px] ${template.isActive
                                                 ? "text-emerald-600"
                                                 : "text-muted-foreground"
                                                 }`}
@@ -407,7 +407,7 @@ export function BudgetTemplateDialog({
                                             type="button"
                                             variant="ghost"
                                             size="sm"
-                                            className="h-6 w-6 rounded-md p-0 text-[10px] text-sky-600"
+                                            className="h-6 w-6 rounded-md p-0 text-[11px] text-sky-600"
                                             title="Edit template"
                                             onClick={() => handleEdit(template)}
                                         >
@@ -417,7 +417,7 @@ export function BudgetTemplateDialog({
                                             type="button"
                                             variant="ghost"
                                             size="sm"
-                                            className="h-6 w-6 rounded-md p-0 text-[10px] text-rose-600"
+                                            className="h-6 w-6 rounded-md p-0 text-[11px] text-rose-600"
                                             title="Hapus template"
                                             onClick={() => handleDelete(template.id)}
                                         >

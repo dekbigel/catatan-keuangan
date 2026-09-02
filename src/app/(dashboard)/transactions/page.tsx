@@ -1,6 +1,7 @@
-import { ArrowRight, ArrowUpDown, Plus, ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { ArrowUpDown, Plus, ArrowRight, ArrowUpRight, ArrowDownLeft, ArrowDownRight, ArrowRightLeft } from "lucide-react";
 
 import { DataTableCard } from "@/components/dashboard/data-table-card";
+import { PageFab } from "@/components/dashboard/page-fab";
 import { PaginationControls } from "@/components/dashboard/pagination-controls";
 import { SummaryCard } from "@/components/dashboard/summary-card";
 import { TransactionDeleteButton } from "@/components/dashboard/transaction-delete-button";
@@ -22,15 +23,38 @@ import { getTransactions } from "@/lib/queries/transactions";
 import { formatCurrencyIDR, formatDateID } from "@/lib/utils/format";
 import { cn } from "@/lib/utils";
 
-function renderAccountLabel(
-  transaction: Awaited<ReturnType<typeof getTransactions>>["transactions"][number],
-) {
+type Transaction = Awaited<
+  ReturnType<typeof getTransactions>
+>["transactions"][number];
+
+function renderAccountLabel(transaction: Transaction) {
   if (transaction.type === "transfer") {
     return `${transaction.fromAccountName ?? "Unknown"} → ${transaction.toAccountName ?? "Unknown"}`;
   }
 
   return transaction.accountName ?? "-";
 }
+
+const transactionTone = {
+  income: {
+    icon: ArrowUpRight,
+    amountClass: "text-emerald-600 dark:text-emerald-400",
+    iconBg: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+    prefix: "+",
+  },
+  expense: {
+    icon: ArrowDownLeft,
+    amountClass: "text-rose-600 dark:text-rose-400",
+    iconBg: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+    prefix: "-",
+  },
+  transfer: {
+    icon: ArrowRightLeft,
+    amountClass: "text-blue-600 dark:text-blue-400",
+    iconBg: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
+    prefix: "",
+  },
+} as const;
 
 type TransactionsPageProps = {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
@@ -83,7 +107,7 @@ export default async function TransactionsPage({
 
   if (result.error || !result.data) {
     return (
-      <section className="space-y-5">
+      <section className="space-y-6">
         {header}
         <ErrorState description={result.error ?? "Gagal memuat data transaksi."} />
       </section>
@@ -105,14 +129,14 @@ export default async function TransactionsPage({
   };
 
   return (
-    <section className="space-y-5 pb-24">
+    <section className="space-y-6">
       {header}
 
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
         <SummaryCard
           label="Total transaksi"
-          value={`${transactions.length}`}
-          helper="Semua transaksi user aktif"
+          value={`${totalCount}`}
+          helper="Semua transaksi tercatat"
           icon={ArrowUpDown}
           variant="default"
         />
@@ -133,15 +157,15 @@ export default async function TransactionsPage({
         <SummaryCard
           label="Transfer"
           value={`${transferCount}`}
-          helper="Perpindahan saldo antar akun"
+          helper="Perpindahan antar akun"
           icon={ArrowUpDown}
-          variant="default"
+          variant="balance"
         />
       </div>
 
       <DataTableCard
         title="Daftar Transaksi"
-        description="Tabel transaksi menampilkan tanggal, tipe, akun/transfer, kategori, deskripsi, dan nominal."
+        description="Riwayat lengkap pemasukan, pengeluaran, dan transfer."
       >
         <TransactionFilters
           filters={result.data.filters}
@@ -156,95 +180,161 @@ export default async function TransactionsPage({
             description="Tambahkan income, expense, atau transfer pertama Anda untuk mulai membangun riwayat cashflow."
           />
         ) : (
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow className="hover:bg-transparent border-border/60">
-                  <TableHead className="h-8 py-2 text-[11px] font-semibold text-muted-foreground">
-                    Tanggal
-                  </TableHead>
-                  <TableHead className="h-8 py-2 text-[11px] font-semibold text-muted-foreground">
-                    Tipe
-                  </TableHead>
-                  <TableHead className="h-8 py-2 text-[11px] font-semibold text-muted-foreground">
-                    Akun / Transfer
-                  </TableHead>
-                  <TableHead className="h-8 py-2 text-[11px] font-semibold text-muted-foreground">
-                    Kategori
-                  </TableHead>
-                  <TableHead className="h-8 py-2 text-[11px] font-semibold text-muted-foreground">
-                    Deskripsi
-                  </TableHead>
-                  <TableHead className="h-8 py-2 text-[11px] font-semibold text-muted-foreground text-right">
-                    Nominal
-                  </TableHead>
-                  <TableHead className="h-8 py-2 text-[11px] font-semibold text-muted-foreground text-right">
-                    Aksi
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {transactions.map((transaction) => (
-                  <TableRow
-                    key={transaction.id}
-                    className="group border-border/40 transition-colors hover:bg-muted/30"
-                  >
-                    <TableCell className="py-2 text-[11px] text-muted-foreground whitespace-nowrap">
-                      {formatDateID(transaction.transactionDate)}
-                    </TableCell>
-                    <TableCell className="py-2">
-                      <TransactionTypeBadge type={transaction.type} />
-                    </TableCell>
-                    <TableCell className="py-2 max-w-[220px]">
-                      <span className="line-clamp-2 text-[11px] text-foreground">
-                        {renderAccountLabel(transaction)}
-                      </span>
-                    </TableCell>
-                    <TableCell className="py-2 text-[11px] text-muted-foreground">
-                      {transaction.categoryName ?? "-"}
-                    </TableCell>
-                    <TableCell className="py-2 max-w-[240px]">
-                      <span className="line-clamp-2 text-[11px] text-muted-foreground">
-                        {transaction.description || "-"}
-                      </span>
-                    </TableCell>
-                    <TableCell
-                      className={cn(
-                        "py-2 text-[11px] font-semibold text-right whitespace-nowrap",
-                        transaction.type === "income" &&
-                        "text-emerald-600 dark:text-emerald-400",
-                        transaction.type === "expense" &&
-                        "text-rose-600 dark:text-rose-400",
-                        transaction.type === "transfer" &&
-                        "text-blue-600 dark:text-blue-400",
-                      )}
-                    >
-                      <span className="flex items-center justify-end gap-1">
-                        {transaction.type === "income" && (
-                          <ArrowUpRight className="size-3 opacity-60" />
+          <>
+            {/* Tampilan mobile: list card */}
+            <ul className="divide-y divide-border/50 md:hidden">
+              {transactions.map((transaction) => {
+                const tone = transactionTone[transaction.type];
+                const Icon = tone.icon;
+                return (
+                  <li key={transaction.id} className="py-3 first:pt-0">
+                    <div className="flex items-start gap-3">
+                      <div
+                        className={cn(
+                          "flex size-10 shrink-0 items-center justify-center rounded-xl",
+                          tone.iconBg
                         )}
-                        {transaction.type === "expense" && (
-                          <ArrowDownRight className="size-3 opacity-60" />
-                        )}
-                        {formatCurrencyIDR(transaction.amount)}
-                      </span>
-                    </TableCell>
-                    <TableCell className="py-2 text-right">
-                      <div className="flex justify-end gap-1">
-                        <TransactionFormDialog
-                          transaction={transaction}
-                          accounts={accounts}
-                          incomeCategories={incomeCategories}
-                          expenseCategories={expenseCategories}
-                        />
-                        <TransactionDeleteButton transactionId={transaction.id} />
+                      >
+                        <Icon className="size-4.5" />
                       </div>
-                    </TableCell>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-start justify-between gap-2">
+                          <p className="truncate text-sm font-semibold text-foreground">
+                            {transaction.description ||
+                              transaction.categoryName ||
+                              renderAccountLabel(transaction)}
+                          </p>
+                          <p
+                            className={cn(
+                              "shrink-0 text-sm font-bold tabular-nums",
+                              tone.amountClass
+                            )}
+                          >
+                            {tone.prefix}
+                            {formatCurrencyIDR(transaction.amount)}
+                          </p>
+                        </div>
+                        <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                          {renderAccountLabel(transaction)}
+                          {transaction.categoryName
+                            ? ` • ${transaction.categoryName}`
+                            : ""}
+                        </p>
+                        <div className="mt-2 flex items-center justify-between gap-2">
+                          <div className="flex items-center gap-2">
+                            <TransactionTypeBadge type={transaction.type} />
+                            <span className="text-[11px] text-muted-foreground">
+                              {formatDateID(transaction.transactionDate)}
+                            </span>
+                          </div>
+                          <div className="flex shrink-0 items-center gap-1">
+                            <TransactionFormDialog
+                              transaction={transaction}
+                              accounts={accounts}
+                              incomeCategories={incomeCategories}
+                              expenseCategories={expenseCategories}
+                            />
+                            <TransactionDeleteButton transactionId={transaction.id} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+
+            {/* Tampilan desktop: tabel */}
+            <div className="hidden overflow-x-auto md:block">
+              <Table>
+                <TableHeader>
+                  <TableRow className="border-border/60 hover:bg-transparent">
+                    <TableHead className="h-9 py-2 text-xs font-semibold text-muted-foreground">
+                      Tanggal
+                    </TableHead>
+                    <TableHead className="h-9 py-2 text-xs font-semibold text-muted-foreground">
+                      Tipe
+                    </TableHead>
+                    <TableHead className="h-9 py-2 text-xs font-semibold text-muted-foreground">
+                      Akun / Transfer
+                    </TableHead>
+                    <TableHead className="h-9 py-2 text-xs font-semibold text-muted-foreground">
+                      Kategori
+                    </TableHead>
+                    <TableHead className="h-9 py-2 text-xs font-semibold text-muted-foreground">
+                      Deskripsi
+                    </TableHead>
+                    <TableHead className="h-9 py-2 text-right text-xs font-semibold text-muted-foreground">
+                      Nominal
+                    </TableHead>
+                    <TableHead className="h-9 py-2 text-right text-xs font-semibold text-muted-foreground">
+                      Aksi
+                    </TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
+                </TableHeader>
+                <TableBody>
+                  {transactions.map((transaction) => (
+                    <TableRow
+                      key={transaction.id}
+                      className="group border-border/40 transition-colors hover:bg-muted/30"
+                    >
+                      <TableCell className="py-2.5 text-xs whitespace-nowrap text-muted-foreground">
+                        {formatDateID(transaction.transactionDate)}
+                      </TableCell>
+                      <TableCell className="py-2.5">
+                        <TransactionTypeBadge type={transaction.type} />
+                      </TableCell>
+                      <TableCell className="max-w-[220px] py-2.5">
+                        <span className="line-clamp-2 text-xs text-foreground">
+                          {renderAccountLabel(transaction)}
+                        </span>
+                      </TableCell>
+                      <TableCell className="py-2.5 text-xs text-muted-foreground">
+                        {transaction.categoryName ?? "-"}
+                      </TableCell>
+                      <TableCell className="max-w-[240px] py-2.5">
+                        <span className="line-clamp-2 text-xs text-muted-foreground">
+                          {transaction.description || "-"}
+                        </span>
+                      </TableCell>
+                      <TableCell
+                        className={cn(
+                          "py-2.5 text-right text-xs font-bold whitespace-nowrap tabular-nums",
+                          transaction.type === "income" &&
+                            "text-emerald-600 dark:text-emerald-400",
+                          transaction.type === "expense" &&
+                            "text-rose-600 dark:text-rose-400",
+                          transaction.type === "transfer" &&
+                            "text-blue-600 dark:text-blue-400",
+                        )}
+                      >
+                        <span className="flex items-center justify-end gap-1">
+                          {transaction.type === "income" && (
+                            <ArrowUpRight className="size-3.5 opacity-60" />
+                          )}
+                          {transaction.type === "expense" && (
+                            <ArrowDownRight className="size-3.5 opacity-60" />
+                          )}
+                          {formatCurrencyIDR(transaction.amount)}
+                        </span>
+                      </TableCell>
+                      <TableCell className="py-2.5 text-right">
+                        <div className="flex justify-end gap-1">
+                          <TransactionFormDialog
+                            transaction={transaction}
+                            accounts={accounts}
+                            incomeCategories={incomeCategories}
+                            expenseCategories={expenseCategories}
+                          />
+                          <TransactionDeleteButton transactionId={transaction.id} />
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </>
         )}
 
         <PaginationControls
@@ -256,13 +346,13 @@ export default async function TransactionsPage({
         />
       </DataTableCard>
 
-      <div className="fixed bottom-6 right-6 z-50">
+      <PageFab>
         <TransactionFormDialog
           accounts={accounts}
           incomeCategories={incomeCategories}
           expenseCategories={expenseCategories}
         />
-      </div>
+      </PageFab>
     </section>
   );
 }
