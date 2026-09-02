@@ -1,0 +1,268 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-jakarta);
+  --font-mono: var(--font-jakarta);
+  --font-heading: var(--font-jakarta);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.25);
+  --radius-2xl: calc(var(--radius) * 1.5);
+  --radius-3xl: calc(var(--radius) * 2);
+  --radius-4xl: calc(var(--radius) * 2.5);
+}
+
+:root {
+  --background: #fafaf9;
+  --foreground: #1c1917;
+  --card: #ffffff;
+  --card-foreground: #1c1917;
+  --popover: #ffffff;
+  --popover-foreground: #1c1917;
+  --primary: #0d9488;
+  --primary-foreground: #f0fdfa;
+  --secondary: #f5f5f4;
+  --secondary-foreground: #44403c;
+  --muted: #f5f5f4;
+  --muted-foreground: #78716c;
+  --accent: #f0fdfa;
+  --accent-foreground: #134e4a;
+  --destructive: #e11d48;
+  --border: #e7e5e4;
+  --input: #e7e5e4;
+  --ring: #0d9488;
+  --radius: 0.5rem;
+
+  --chart-1: #0d9488;
+  --chart-2: #f59e0b;
+  --chart-3: #6366f1;
+  --chart-4: #ec4899;
+  --chart-5: #8b5cf6;
+
+  --sidebar: #fafaf9;
+  --sidebar-foreground: #44403c;
+  --sidebar-primary: #0d9488;
+  --sidebar-primary-foreground: #f0fdfa;
+  --sidebar-accent: #f0fdfa;
+  --sidebar-accent-foreground: #134e4a;
+  --sidebar-border: #e7e5e4;
+  --sidebar-ring: #0d9488;
+
+  --status-income: #059669;
+  --status-income-bg: #ecfdf5;
+  --status-income-border: #a7f3d0;
+  --status-expense: #dc2626;
+  --status-expense-bg: #fef2f2;
+  --status-expense-border: #fecaca;
+  --status-transfer: #2563eb;
+  --status-transfer-bg: #eff6ff;
+  --status-transfer-border: #bfdbfe;
+  --status-warning: #d97706;
+  --status-warning-bg: #fffbeb;
+  --status-warning-border: #fde68a;
+  --status-positive: #059669;
+  --status-positive-bg: #ecfdf5;
+  --status-positive-border: #a7f3d0;
+
+  --font-sans: var(--font-jakarta);
+  --font-heading: var(--font-jakarta);
+}
+
+.dark {
+  --background: #0c0a09;
+  --foreground: #fafaf9;
+  --card: #1c1917;
+  --card-foreground: #fafaf9;
+  --popover: #1c1917;
+  --popover-foreground: #fafaf9;
+  --primary: #14b8a6;
+  --primary-foreground: #042f2e;
+  --secondary: #292524;
+  --secondary-foreground: #e7e5e4;
+  --muted: #292524;
+  --muted-foreground: #a8a29e;
+  --accent: #134e4a;
+  --accent-foreground: #ccfbf1;
+  --destructive: #f43f5e;
+  --border: #292524;
+  --input: #292524;
+  --ring: #14b8a6;
+
+  --chart-1: #14b8a6;
+  --chart-2: #fbbf24;
+  --chart-3: #818cf8;
+  --chart-4: #f472b6;
+  --chart-5: #a78bfa;
+
+  --sidebar: #0c0a09;
+  --sidebar-foreground: #a8a29e;
+  --sidebar-primary: #14b8a6;
+  --sidebar-primary-foreground: #042f2e;
+  --sidebar-accent: #134e4a;
+  --sidebar-accent-foreground: #ccfbf1;
+  --sidebar-border: #292524;
+  --sidebar-ring: #14b8a6;
+
+  --status-income: #34d399;
+  --status-income-bg: #064e3b;
+  --status-income-border: #065f46;
+  --status-expense: #f87171;
+  --status-expense-bg: #450a0a;
+  --status-expense-border: #7f1d1d;
+  --status-transfer: #60a5fa;
+  --status-transfer-bg: #1e3a5f;
+  --status-transfer-border: #1e40af;
+  --status-warning: #fbbf24;
+  --status-warning-bg: #451a03;
+  --status-warning-border: #78350f;
+  --status-positive: #34d399;
+  --status-positive-bg: #064e3b;
+  --status-positive-border: #065f46;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  html {
+    @apply font-sans;
+  }
+}
+
+@layer base {
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--muted-foreground);
+  }
+}
+
+@layer base {
+  * {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+}
+
+@layer utilities {
+  .card-hover {
+    @apply transition-all duration-200 ease-out;
+  }
+
+  .card-hover:hover {
+    @apply shadow-md;
+  }
+}
+
+@layer utilities {
+  .gradient-income {
+    background: linear-gradient(135deg, var(--status-income-bg) 0%, transparent 100%);
+  }
+
+  .gradient-expense {
+    background: linear-gradient(135deg, var(--status-expense-bg) 0%, transparent 100%);
+  }
+
+  .gradient-balance {
+    background: linear-gradient(135deg, var(--accent) 0%, transparent 100%);
+  }
+
+  .gradient-savings {
+    background: linear-gradient(135deg, #fef3c7 0%, transparent 100%);
+  }
+
+  .dark .gradient-savings {
+    background: linear-gradient(135deg, #451a03 0%, transparent 100%);
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-background/80 backdrop-blur-xl;
+  }
+
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-xl border border-border/50;
+  }
+}
+
+@layer utilities {
+  .shimmer {
+    background: linear-gradient(90deg,
+        var(--muted) 25%,
+        var(--background) 50%,
+        var(--muted) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+
+    100% {
+      background-position: -200% 0;
+    }
+  }
+}
+
+@layer base {
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
